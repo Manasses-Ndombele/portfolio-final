@@ -1,11 +1,6 @@
-import { motion } from 'framer-motion';
-import { useLanguage } from '../hooks/useLanguage';
-import { translations } from '../data/translations';
+import { motion } from "framer-motion";
 
 export const Interests = () => {
-  const { language } = useLanguage();
-  const t = translations[language];
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -28,7 +23,7 @@ export const Interests = () => {
   };
 
   return (
-    <section className="py-20 bg-white dark:bg-gray-800">
+    <section className="py-20 bg-gray-800">
       <div className="container mx-auto px-4">
         <motion.div
           className="text-center mb-12"
@@ -37,10 +32,10 @@ export const Interests = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-8">
-            {t.interests.title}
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
+            Interesses Pessoais
           </h2>
-          
+
           <motion.div
             className="flex flex-wrap justify-center gap-4"
             variants={containerVariants}
@@ -48,10 +43,16 @@ export const Interests = () => {
             whileInView="visible"
             viewport={{ once: true }}
           >
-            {t.interests.items.map((interest, index) => (
+            {[
+              "Marketing digital",
+              "Música",
+              "Idiomas",
+              "Audiovisual",
+              "Teologia",
+            ].map((interest, index) => (
               <motion.span
                 key={index}
-                className="px-6 py-3 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-lg font-medium hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors duration-300 cursor-pointer"
+                className="px-6 py-3 bg-blue-900 text-blue-200 rounded-full text-lg font-medium hover:bg-blue-800 transition-colors duration-300 cursor-pointer"
                 variants={itemVariants}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

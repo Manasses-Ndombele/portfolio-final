@@ -1,23 +1,38 @@
-import { motion } from 'framer-motion';
-import { Github, Linkedin, Instagram, Mail, Facebook } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Github, Linkedin, Instagram, Mail, Facebook } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
-import { useLanguage } from '../hooks/useLanguage';
-import { translations } from '../data/translations';
 
 export const Footer = () => {
-  const { language } = useLanguage();
-  const t = translations[language];
-
   const socialLinks = [
-    { icon: Github, href: 'https://github.com/Manasses-Ndombele', label: 'GitHub' },
-    { icon: Linkedin, href: 'https://www.linkedin.com/in/manassés-ndombele-384239327', label: 'LinkedIn' },
-    { icon: Instagram, href: 'https://instagram.com/manasses.webdev/', label: 'Instagram' },
-		{ icon: Facebook, href: 'https://www.facebook.com/profile.php?id=61569820958905', label: 'Facebook' },
-		{ icon: FaWhatsapp, href: 'https://wa.me/244951822925/', label: 'Whatsapp' },
-	];
+    {
+      icon: Github,
+      href: "https://github.com/Manasses-Ndombele",
+      label: "GitHub",
+    },
+    {
+      icon: Linkedin,
+      href: "https://www.linkedin.com/in/manassés-ndombele-384239327",
+      label: "LinkedIn",
+    },
+    {
+      icon: Instagram,
+      href: "https://instagram.com/manasses.webdev/",
+      label: "Instagram",
+    },
+    {
+      icon: Facebook,
+      href: "https://www.facebook.com/profile.php?id=61569820958905",
+      label: "Facebook",
+    },
+    {
+      icon: FaWhatsapp,
+      href: "https://wa.me/244951822925/",
+      label: "Whatsapp",
+    },
+  ];
 
   return (
-    <footer className="bg-gray-900 dark:bg-black text-white py-16">
+    <footer className="bg-black text-white py-16">
       <div className="container mx-auto px-4">
         <div className="text-center space-y-8">
           {/* Social Links */}
@@ -28,8 +43,8 @@ export const Footer = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-xl font-semibold mb-6">{t.footer.social}</h3>
-            
+            <h3 className="text-xl font-semibold mb-6"></h3>
+
             <div className="flex justify-center space-x-6">
               {socialLinks.map(({ icon: Icon, href, label }) => (
                 <motion.a
@@ -56,7 +71,7 @@ export const Footer = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <p className="text-gray-400">{t.footer.email}</p>
+            <p className="text-gray-400">Envie email para</p>
             <a
               href="mailto:devmanasses@outlook.com"
               className="inline-flex items-center text-lg font-semibold text-blue-400 hover:text-blue-300 transition-colors"
@@ -75,7 +90,7 @@ export const Footer = () => {
             viewport={{ once: true }}
           >
             <p className="text-gray-400">
-              {t.footer.copyright}
+              © 2025 – Desenvolvido por Manassés Ndombele.
             </p>
           </motion.div>
         </div>

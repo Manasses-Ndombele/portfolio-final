@@ -15,7 +15,7 @@ import {
   SiNextdotjs,
 } from "react-icons/si";
 import { IoLogoJavascript, IoLogoSass, IoLogoDocker } from "react-icons/io5";
-import { FaPython, FaLaravel } from "react-icons/fa6";
+import { FaPython } from "react-icons/fa6";
 import { LuFileJson } from "react-icons/lu";
 import { CgFigma } from "react-icons/cg";
 import { DiLinux } from "react-icons/di";

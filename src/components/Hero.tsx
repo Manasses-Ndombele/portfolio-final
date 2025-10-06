@@ -1,26 +1,22 @@
-import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-import { useLanguage } from '../hooks/useLanguage';
-import { translations } from '../data/translations';
+import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 
 export const Hero = () => {
-  const { language } = useLanguage();
-  const t = translations[language];
-
   const scrollToContact = () => {
-    const element = document.getElementById('contact');
+    const element = document.getElementById("contact");
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   return (
     <section className="relative min-h-screen pt-8 pb-4 flex items-center justify-center overflow-hidden">
       {/* Background */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: 'url(https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&w=1920)',
+          backgroundImage:
+            "url(https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&w=1920)",
         }}
       >
         <div className="absolute inset-0 bg-black/50"></div>
@@ -45,7 +41,7 @@ export const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          {t.hero.title}
+          Criando projetos pensados no detalhe, criados para vender
         </motion.h1>
 
         <motion.p
@@ -54,7 +50,11 @@ export const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          {t.hero.subtitle}
+          Mais do que escrever código, eu mergulho nos detalhes que levam os
+          usuários a interagirem de forma intuitiva com meus projetos. Cada cor,
+          posição, imagem, animação tem um porquê! Desta forma eu crio soluções
+          vendáveis para que você possa ter um resultado final que você possa
+          chamar orgulhosamente de seu!
         </motion.p>
 
         <motion.button
@@ -66,7 +66,7 @@ export const Hero = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          {t.hero.cta}
+          Pedir orçamento
           <ArrowRight className="ml-2 w-5 h-5" />
         </motion.button>
       </div>

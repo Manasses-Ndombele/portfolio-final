@@ -2,7 +2,7 @@ export interface Project {
   id: string;
   title: string;
   description: string;
-	cover: string;
+  cover: string;
   image: string;
   repository: string;
   demo: string;
@@ -11,8 +11,8 @@ export interface Project {
 
 export interface Skill {
   name: string;
-  icon: string;
-  category: 'frontend' | 'backend' | 'other';
+  Icon: React.ComponentType<{ className?: string }>;
+  category: "frontend" | "backend" | "other";
 }
 
 export interface Service {
@@ -20,6 +20,3 @@ export interface Service {
   description: string;
   icon: string;
 }
-
-export type Language = 'pt' | 'en';
-export type Theme = 'light' | 'dark';

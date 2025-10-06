@@ -1,13 +1,10 @@
 import { motion } from "framer-motion";
-import { useLanguage } from "../hooks/useLanguage";
-import { translations } from "../data/translations";
 import { skills } from "../data/skills";
 
 export const Skills = () => {
-  const { language } = useLanguage();
-  const t = translations[language];
-
-  const frontendSkills = skills.filter((skill) => skill.category === "frontend");
+  const frontendSkills = skills.filter(
+    (skill) => skill.category === "frontend"
+  );
   const backendSkills = skills.filter((skill) => skill.category === "backend");
   const otherSkills = skills.filter((skill) => skill.category === "other");
 
@@ -33,7 +30,7 @@ export const Skills = () => {
   };
 
   return (
-    <section className="py-20 bg-gray-50 dark:bg-gray-900">
+    <section className="py-20 bg-gray-900">
       <div className="container mx-auto px-4">
         <motion.div
           className="text-center mb-16"
@@ -42,11 +39,11 @@ export const Skills = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            {t.skills.title}
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            Minhas Habilidades
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            {t.skills.subtitle}
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            Esta é a área do portfólio que venho atualizar a todo o momento com o maior orgulho e prazer do mundo, porque acredito no aprendizado autodidata e que o uso das melhores ferramentas têm como consequência os melhores resultados para si.
           </p>
         </motion.div>
 
@@ -58,8 +55,8 @@ export const Skills = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-bold text-center text-blue-600 dark:text-blue-400 mb-8">
-              {t.skills.frontend}
+            <h3 className="text-2xl font-bold text-center text-blue-400 mb-8">
+              Frontend
             </h3>
             <motion.div
               className="flex flex-wrap justify-center gap-6"
@@ -71,14 +68,14 @@ export const Skills = () => {
               {frontendSkills.map(({ name, Icon }) => (
                 <motion.div
                   key={name}
-                  className="flex flex-col items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                  className="flex flex-col items-center p-4 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
                   variants={itemVariants}
                   whileHover={{ scale: 1.05 }}
                 >
-                  <div className="text-blue-600 dark:text-blue-400 mb-2">
+                  <div className="text-blue-400 mb-2">
                     <Icon className="w-8 h-8" />
                   </div>
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300 cursor-default">
+                  <span className="text-sm font-medium text-gray-300 cursor-default">
                     {name}
                   </span>
                 </motion.div>
@@ -93,8 +90,8 @@ export const Skills = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-bold text-center text-blue-600 dark:text-blue-400 mb-8">
-              {t.skills.backend}
+            <h3 className="text-2xl font-bold text-center text-blue-400 mb-8">
+              Backend
             </h3>
             <motion.div
               className="flex flex-wrap justify-center gap-6"
@@ -106,14 +103,14 @@ export const Skills = () => {
               {backendSkills.map(({ name, Icon }) => (
                 <motion.div
                   key={name}
-                  className="flex flex-col items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                  className="flex flex-col items-center p-4 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
                   variants={itemVariants}
                   whileHover={{ scale: 1.05 }}
                 >
-                  <div className="text-blue-600 dark:text-blue-400 mb-2">
+                  <div className="text-blue-400 mb-2">
                     <Icon className="w-8 h-8" />
                   </div>
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300 cursor-default">
+                  <span className="text-sm font-medium text-gray-300 cursor-default">
                     {name}
                   </span>
                 </motion.div>
@@ -128,8 +125,8 @@ export const Skills = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-bold text-center text-blue-600 dark:text-blue-400 mb-8">
-              {t.skills.other}
+            <h3 className="text-2xl font-bold text-center text-blue-400 mb-8">
+              Outras tecnologias
             </h3>
             <motion.div
               className="flex flex-wrap justify-center gap-6"
@@ -141,14 +138,14 @@ export const Skills = () => {
               {otherSkills.map(({ name, Icon }) => (
                 <motion.div
                   key={name}
-                  className="flex flex-col items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                  className="flex flex-col items-center p-4 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
                   variants={itemVariants}
                   whileHover={{ scale: 1.05 }}
                 >
-                  <div className="text-blue-600 dark:text-blue-400 mb-2">
+                  <div className="text-blue-400 mb-2">
                     <Icon className="w-8 h-8" />
                   </div>
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300 cursor-default">
+                  <span className="text-sm font-medium text-gray-300 cursor-default">
                     {name}
                   </span>
                 </motion.div>
