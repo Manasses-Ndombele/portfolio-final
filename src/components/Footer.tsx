@@ -26,7 +26,7 @@ export const Footer = () => {
     },
     {
       icon: FaWhatsapp,
-      href: "https://wa.me/244951822925/",
+      href: "https://wa.me/244923714178/",
       label: "Whatsapp",
     },
   ];

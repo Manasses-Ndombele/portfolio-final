@@ -11,30 +11,30 @@ import { Footer } from "./components/Footer";
 
 function App() {
   useEffect(() => {
-    // SEO Meta Tags
-    document.title = "Manassés Ndombele - Desenvolvedor Full Stack";
-
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute(
-        "content",
-        "Portfólio de Manassés Ndombele - Desenvolvedor Full Stack especializado em React, TypeScript, Python e desenvolvimento web moderno."
-      );
+    document.title = "Manassés Ndombele - Desenvolvedor Web Fullstack";
+    const canonicalHref = "https://www.manassesndombele.com/";
+    let canonical = document.querySelector(
+      'link[rel="canonical"]'
+    ) as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.rel = "canonical";
+      canonical.href = canonicalHref;
+      document.head.appendChild(canonical);
     } else {
-      const meta = document.createElement("meta");
-      meta.name = "description";
-      meta.content =
-        "Portfólio de Manassés Ndombele - Desenvolvedor Full Stack especializado em React, TypeScript, Python e desenvolvimento web moderno.";
-      document.head.appendChild(meta);
+      canonical.href = canonicalHref;
     }
 
-    const viewport = document.querySelector('meta[name="viewport"]');
-    if (!viewport) {
-      const meta = document.createElement("meta");
-      meta.name = "viewport";
-      meta.content = "width=device-width, initial-scale=1.0";
-      document.head.appendChild(meta);
-    }
+    const ogTitle = document.querySelector(
+      'meta[property="og:title"]'
+    ) as HTMLMetaElement | null;
+    if (ogTitle) ogTitle.content = document.title;
+    const ogDesc = document.querySelector(
+      'meta[property="og:description"]'
+    ) as HTMLMetaElement | null;
+    if (ogDesc)
+      ogDesc.content =
+        "Portfólio de Manassés Ndombele — Desenvolvedor Web Fullstack especializado em React, TypeScript e Python.";
   }, []);
 
   return (
