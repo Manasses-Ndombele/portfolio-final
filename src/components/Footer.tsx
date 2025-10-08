@@ -16,7 +16,7 @@ export const Footer = () => {
     },
     {
       icon: Instagram,
-      href: "https://instagram.com/manasses.webdev/",
+      href: "https://www.instagram.com/manasses.ndombele/",
       label: "Instagram",
     },
     {
@@ -26,7 +26,7 @@ export const Footer = () => {
     },
     {
       icon: FaWhatsapp,
-      href: "https://wa.me/244923714178/",
+      href: "https://wa.me/244951822925/",
       label: "Whatsapp",
     },
   ];
