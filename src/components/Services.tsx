@@ -36,7 +36,7 @@ export const Services = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            que eu posso fazer por você?
+            O que eu posso fazer por você?
           </h2>
           <p className="text-xl text-blue-100 max-w-3xl mx-auto">
             Toda a ideia pode ser transformada em um código, e todo código pode
