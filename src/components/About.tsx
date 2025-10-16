@@ -19,7 +19,7 @@ export const About = () => {
                 <div className="max-w-96 h-auto mx-auto lg:mx-0 rounded-2xl overflow-hidden shadow-2xl">
                   <img
                     src={profileImg}
-                    alt="Manassés Ndombelie"
+                    alt="Manassés Ndombele Desenvolvedor Web Fullstack"
                     className="w-full h-full object-cover"
                   />
                 </div>
