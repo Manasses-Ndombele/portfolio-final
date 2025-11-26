@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import profileImg from "../assets/manasses-ndombele.jpg";
+import profileImg from "../assets/manasses-ndombele-desenvolvedor-web-fullstack.jpg";
 
 export const About = () => {
   return (
