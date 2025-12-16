@@ -54,17 +54,17 @@ export const Services = () => {
         >
           {[
             {
-              title: "Sites de vendas",
+              title: "Página de vendas",
               description:
-                "Uma das minhas especialidades é o desenvolvimento de páginas de vendas e lojas online onde o foco principal é a venda de um produto ou serviço, geralmente apresentados com um design arrojado e modelados para o público alvo do vendedor.",
+                "Landing pages profissionais que aumentam a taxa de conversão e transformam tráfego em oportunidades reais de venda com performance, clareza, credibilidade e design moderno.",
             },
             {
-              title: "Site para branding",
+              title: "Site institucional",
               description:
-                "Como resposta a alta demanda por sites que têm o objetivo de passar uma mensagem consistente com a identidade visual de uma marca trabalho na prestação do serviço de criação de sites institucionais! Se você deseja um site que reflita a sua marca este serviço é perfeito para si.",
+                "Sites institucionais profissionais que transmitem credibilidade, fortalecem sua marca, melhoram o posicionamento no Google e apresentam seu negócio com clareza, autoridade e confiança para clientes e parceiros.",
             },
             {
-              title: "Sistemas web",
+              title: "Sistema web",
               description:
                 "Poucos desenvolvedores conseguem alcançar a excelência em design, segurança e eficiência em sistemas web, sites que têm uma funcionalidade em específica ou diversas são o desafio que superei e posso diligentemente sarar essa grande dor nesse mercado adequadamente.",
             },
