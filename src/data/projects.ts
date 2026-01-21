@@ -81,14 +81,4 @@ export const projects: Project[] = [
     demo: 'https://jortran-landing-page.vercel.app/',
     technologies: ['ReactJS', 'TypeScript', 'Tailwind CSS', 'Python', 'Django', 'PostgreSQL'],
   },
-	{
-    id: '9',
-    title: 'EDEN Hotels - Site institucional',
-    description: 'Rede de hotéis “EDEN Hotels”: experiência europeia refinada, elegância e conforto para hóspedes exigentes.',
-    image: 'https://images.pexels.com/photos/70441/pexels-photo-70441.jpeg?auto=compress&cs=tinysrgb&w=800',
-    cover: '',
-		repository: 'https://github.com/Manasses-Ndombele/EDEN-Hotels',
-    demo: 'https://eden-hotels.vercel.app/',
-    technologies: ['ReactJS', 'TypeScript', 'Tailwind CSS', 'PHP', 'MySQL'],
-  },
 ];
