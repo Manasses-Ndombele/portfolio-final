@@ -1,3 +1,5 @@
+import profileImg from "../assets/manasses-ndombele-desenvolvedor-programador.png";
+
 interface HeroSectionProps {
   whatsappNumber: string;
 }
@@ -30,8 +32,8 @@ export default function HeroSection({ whatsappNumber }: HeroSectionProps) {
             <div className="relative">
               <div className="absolute inset-0 bg-[#F2921D] rounded-2xl transform rotate-6"></div>
               <img
-                src="/public/me.png"
-                alt="Manassés Ndombele"
+                src={profileImg}
+                alt="Manassés Ndombele - Programador Fullstack"
                 className="relative rounded-2xl shadow-2xl w-full max-w-md object-cover"
               />
             </div>
