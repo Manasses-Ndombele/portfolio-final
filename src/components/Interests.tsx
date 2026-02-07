@@ -32,7 +32,7 @@ export const Interests = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
             Interesses Pessoais
           </h2>
 

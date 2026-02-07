@@ -39,7 +39,7 @@ export const Skills = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Minhas Habilidades
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -55,7 +55,7 @@ export const Skills = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-bold text-center text-blue-400 mb-8">
+            <h3 className="text-xl font-bold text-center text-blue-400 mb-8">
               Frontend
             </h3>
             <motion.div
@@ -90,7 +90,7 @@ export const Skills = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-bold text-center text-blue-400 mb-8">
+            <h3 className="text-xl font-bold text-center text-blue-400 mb-8">
               Backend
             </h3>
             <motion.div
@@ -125,7 +125,7 @@ export const Skills = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-bold text-center text-blue-400 mb-8">
+            <h3 className="text-xl font-bold text-center text-blue-400 mb-8">
               Outras tecnologias
             </h3>
             <motion.div

@@ -71,10 +71,10 @@ export const Contact = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Vamos Tirar Sua Ideia Do Papel!
             </h2>
-            <p className="text-xl text-blue-100 max-w-2xl mx-auto">
+            <p className="text-lg text-blue-100 max-w-2xl mx-auto">
               Preencha os seus dados e descreva o seu projeto. Vou analisar tudo
               com atenção e te enviar um orçamento o quanto antes, através do
               contacto informado. Esse é o primeiro passo para transformar sua

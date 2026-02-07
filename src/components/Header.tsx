@@ -38,7 +38,7 @@ export const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <motion.div
-            className="text-2xl font-bold text-blue-400 cursor-pointer"
+            className="text-xl font-bold text-blue-400 cursor-pointer"
             whileHover={{ scale: 1.05 }}
           >
             {"{DevManasses}"}

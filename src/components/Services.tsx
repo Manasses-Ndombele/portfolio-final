@@ -35,10 +35,10 @@ export const Services = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             O que eu posso fazer por você?
           </h2>
-          <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+          <p className="text-lg text-blue-100 max-w-3xl mx-auto">
             Toda a ideia pode ser transformada em um código, e todo código pode
             ser transformado em uma solução para o mercado! Eis algumas das
             soluções que posso prover.
@@ -85,7 +85,7 @@ export const Services = () => {
                 <div className="w-16 h-16 bg-blue-900 rounded-2xl flex items-center justify-center mb-6">
                   <IconComponent className="w-8 h-8 text-blue-400" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4">
+                <h3 className="text-xl font-bold text-white mb-2">
                   {service.title}
                 </h3>
                 <p className="text-gray-300 leading-relaxed">
