@@ -1,4 +1,4 @@
-import profileImg from "../assets/manasses-ndombele-desenvolvedor-programador.png";
+import profileImg from "../assets/manasses-ndombele-programador.png";
 
 interface HeroSectionProps {
   whatsappNumber: string;
