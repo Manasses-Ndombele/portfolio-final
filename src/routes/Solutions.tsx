@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import HeroSection from "../lpComponents/HeroSection";
 import ProblemsSection from "../lpComponents/ProblemsSection";
 import SolutionsSection from "../lpComponents/SolutionsSection";
-import TestimonialsSection from "../lpComponents/TestimonialsSection";
 import AboutSection from "../lpComponents/AboutSection";
 import CTASection from "../lpComponents/CTASection";
 import Footer from "../lpComponents/Footer";
@@ -59,7 +58,6 @@ function Solutions() {
       <HeroSection whatsappNumber={whatsappNumber} />
       <ProblemsSection />
       <SolutionsSection />
-      <TestimonialsSection />
       <AboutSection />
       <CTASection whatsappNumber={whatsappNumber} />
       <Footer />

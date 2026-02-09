@@ -27,7 +27,7 @@ export default function CTASection({ whatsappNumber }: CTASectionProps) {
             Falar Comigo no WhatsApp
           </button>
           <p className="font-poppins text-sm text-white mt-6 opacity-90">
-            Respondo pessoalmente e sem compromisso
+            Respondo pessoalmente. Tire suas dúvidas sem qualquer custo.
           </p>
         </div>
       </div>
