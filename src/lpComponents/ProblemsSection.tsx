@@ -1,6 +1,9 @@
+import { useScrollReveal } from "../hooks/useScrollReveal";
 import { AlertCircle } from 'lucide-react';
 
 export default function ProblemsSection() {
+  const ref = useScrollReveal<HTMLElement>();
+
   const problems = [
     "As pessoas procuram no Google e não encontram seu negócio",
     "Seu concorrente aparece antes de você",
@@ -11,7 +14,7 @@ export default function ProblemsSection() {
   ];
 
   return (
-    <section className="py-20 bg-[#F9FAFB]">
+    <section ref={ref} className="reveal py-20 bg-[#F9FAFB]">
       <div className="container mx-auto px-6">
         <h2 className="font-montserrat font-bold text-3xl lg:text-4xl text-[#162536] text-center mb-4">
           Será que no seu negócio: 👇

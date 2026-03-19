@@ -1,3 +1,4 @@
+import { useScrollReveal } from "../hooks/useScrollReveal";
 import { MessageCircle } from 'lucide-react';
 
 interface CTASectionProps {
@@ -9,8 +10,10 @@ export default function CTASection({ whatsappNumber }: CTASectionProps) {
     window.open(`https://wa.me/${whatsappNumber}`, '_blank');
   };
 
+  const ref = useScrollReveal<HTMLElement>();
+
   return (
-    <section className="py-20 bg-gradient-to-br from-[#F2921D] to-[#d97e0f]">
+    <section ref={ref} className="reveal py-20 bg-gradient-to-br from-[#F2921D] to-[#d97e0f]">
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="font-montserrat font-bold text-3xl lg:text-5xl text-white mb-6 leading-tight">

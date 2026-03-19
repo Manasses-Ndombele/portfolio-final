@@ -1,3 +1,4 @@
+import { useScrollReveal } from "../hooks/useScrollReveal";
 import profileImg from "../assets/manasses-ndombele-programador.png";
 
 interface HeroSectionProps {
@@ -6,19 +7,28 @@ interface HeroSectionProps {
 
 export default function HeroSection({ whatsappNumber }: HeroSectionProps) {
   const handleWhatsAppClick = () => {
-    window.open(`https://wa.me/${whatsappNumber}`, '_blank');
+    window.open(`https://wa.me/${whatsappNumber}`, "_blank");
   };
 
+  const ref = useScrollReveal<HTMLElement>();
+
   return (
-    <section className="bg-gradient-to-br from-[#056CF2] to-[#162536] py-20 lg:py-32">
+    <section
+      ref={ref}
+      className="reveal bg-gradient-to-br from-[#056CF2] to-[#162536] py-20 lg:py-32"
+    >
       <div className="container mx-auto px-6">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           <div className="flex-1 order-2 lg:order-1">
             <h1 className="font-montserrat font-bold text-4xl lg:text-5xl text-white leading-tight mb-6">
-              Faço Seu Negócio Aparecer No Google e Atrair Clientes Todos os Dias
+              Faço Seu Negócio Aparecer No Google e Atrair Clientes Todos os
+              Dias
             </h1>
             <p className="font-poppins text-lg lg:text-xl text-[#F9FAFB] mb-8 leading-relaxed">
-              Sites profissionais que fazem seu negócio aparecer no Google quando novos clientes procuram por serviços. Mais visibilidade, mais contactos, mais vendas - sem precisar entender de tecnologia e marketing digital.
+              Sites profissionais que fazem seu negócio aparecer no Google
+              quando novos clientes procuram por serviços. Mais visibilidade,
+              mais contactos, mais vendas - sem precisar entender de tecnologia
+              e marketing digital.
             </p>
             <button
               onClick={handleWhatsAppClick}
@@ -29,12 +39,11 @@ export default function HeroSection({ whatsappNumber }: HeroSectionProps) {
           </div>
 
           <div className="flex-1 order-1 lg:order-2 flex justify-center">
-            <div className="relative">
-              <div className="absolute inset-0 bg-[#F2921D] rounded-2xl transform rotate-6"></div>
+            <div className="bg-[#F2921D] rounded-2xl overflow-hidden shadow-2xl w-full max-w-md">
               <img
                 src={profileImg}
                 alt="Manassés Ndombele - Programador Fullstack"
-                className="relative rounded-2xl shadow-2xl w-full max-w-md object-cover"
+                className="w-full h-full object-cover object-top"
               />
             </div>
           </div>

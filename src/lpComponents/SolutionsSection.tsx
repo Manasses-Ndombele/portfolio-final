@@ -1,3 +1,4 @@
+import { useScrollReveal } from "../hooks/useScrollReveal";
 import { CheckCircle2 } from 'lucide-react';
 
 export default function SolutionsSection() {
@@ -10,8 +11,9 @@ export default function SolutionsSection() {
     "Presença digital que transmite confiança e profissionalismo"
   ];
 
+  const ref = useScrollReveal<HTMLElement>();
   return (
-    <section className="py-20 bg-white">
+    <section ref={ref} className="reveal py-20 bg-white">
       <div className="container mx-auto px-6">
         <h2 className="font-montserrat font-bold text-3xl lg:text-4xl text-[#162536] text-center mb-4">
           Eu posso te ajudar...

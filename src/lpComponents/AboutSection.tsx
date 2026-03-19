@@ -1,6 +1,10 @@
+import { useScrollReveal } from "../hooks/useScrollReveal";
+
 export default function AboutSection() {
+  const ref = useScrollReveal<HTMLElement>();
+
   return (
-    <section className="py-20 bg-white">
+    <section ref={ref} className="reveal py-20 bg-white">
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto">
           <h2 className="font-montserrat font-bold text-3xl lg:text-4xl text-[#162536] text-center mb-8">
