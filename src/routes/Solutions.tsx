@@ -2,16 +2,13 @@ import { useEffect } from "react";
 import HeroSection from "../lpComponents/HeroSection";
 import ProblemsSection from "../lpComponents/ProblemsSection";
 import SolutionsSection from "../lpComponents/SolutionsSection";
+import PricingSection from "../lpComponents/PricingSection";
 import SEOAuthoritySection from "../lpComponents/SEOAuthoritySection";
 import SkillsSection from "../lpComponents/SkillsSection";
 import AboutSection from "../lpComponents/AboutSection";
 import CTASection from "../lpComponents/CTASection";
 import Footer from "../lpComponents/Footer";
-
-// Importa o GIF de ranking no Google (coloca o ficheiro em src/assets/)
 import seoRankingGif from "../assets/seo-ranking-google.gif";
-
-// Importa a tua foto para a secção de skills
 import profileImg2 from "../assets/manasses-ndombele-programador2.jpg";
 
 function Solutions() {
@@ -67,15 +64,9 @@ function Solutions() {
       <HeroSection whatsappNumber={whatsappNumber} />
       <ProblemsSection />
       <SolutionsSection />
-
-      {/* Nova secção: Autoridade em SEO
-          - Passa o GIF como prop gifSrc após importar o ficheiro acima
-          - Exemplo: <SEOAuthoritySection gifSrc={seoRankingGif} /> */}
       <SEOAuthoritySection gifSrc={seoRankingGif} />
-
-      {/* Nova secção: Skills do programador */}
+      <PricingSection whatsappNumber={whatsappNumber} />
       <SkillsSection profileImageSrc={profileImg2} />
-
       <AboutSection />
       <CTASection whatsappNumber={whatsappNumber} />
       <Footer />
