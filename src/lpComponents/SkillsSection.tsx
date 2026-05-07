@@ -27,7 +27,7 @@ export default function SkillsSection({ profileImageSrc }: SkillsSectionProps) {
   return (
     <section ref={ref} className="reveal py-20 bg-white">
       <div className="container mx-auto px-6">
-        {/* Frase de destaque — GitHub */}
+        {/* Frase de destaque — GitHub 
         <div className="max-w-4xl mx-auto mb-14 text-center">
           <div className="inline-flex items-center gap-3 bg-gradient-to-r from-[#162536] to-[#056CF2] text-white font-poppins text-sm lg:text-base font-semibold px-6 py-3 rounded-full shadow-lg">
             <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
@@ -35,7 +35,7 @@ export default function SkillsSection({ profileImageSrc }: SkillsSectionProps) {
             </svg>
             Um dos utilizadores mais activos no GitHub de Angola 🇦🇴
           </div>
-        </div>
+        </div> */}
 
         <div className="max-w-5xl mx-auto">
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">

@@ -16,7 +16,7 @@ export const Footer = () => {
     },
     {
       icon: Instagram,
-      href: "https://www.instagram.com/manasses.ndombele/",
+      href: "https://www.instagram.com/genio.do.site",
       label: "Instagram",
     },
     {
