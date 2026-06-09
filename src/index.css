@@ -16,6 +16,21 @@
   }
 }
 
+@font-face {
+  font-family: 'Mona Sans';
+  src: url('https://github.githubassets.com/assets/mona-sans.woff2') format('woff2');
+  font-weight: 100 900;
+}
+
+@keyframes skillsScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 /* Custom styles for Swiper */
 .projects-swiper {
   padding: 50px 0;

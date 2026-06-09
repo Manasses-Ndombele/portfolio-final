@@ -1,15 +1,15 @@
-import { useScrollReveal } from "../hooks/useScrollReveal";
+import { FC } from "react";
 
-export default function Footer() {
-  const ref = useScrollReveal<HTMLElement>();
+// ─── Footer ───────────────────────────────────────────────────────────────────
+const Footer: FC = () => (
+  <footer className="bg-black border-t border-[#60A5FA]/10 py-7 px-6 text-center">
+    <p
+      className="text-[#F5F5F5]/40 text-xs tracking-[0.06em] uppercase"
+      style={{ fontFamily: "Poppins, ui-sans-serif" }}
+    >
+      COPYRIGHT © 2026 MANASSES NDOMBELEE · PROGRAMADOR WEB FULLSTACK
+    </p>
+  </footer>
+);
 
-  return (
-    <footer ref={ref} className="reveal bg-[#162536] py-8">
-      <div className="container mx-auto px-6">
-        <p className="font-poppins text-center text-[#F9FAFB] text-sm">
-          Copyright © 2026 - Manassés Ndombele. Todos os direitos reservados.
-        </p>
-      </div>
-    </footer>
-  );
-}
+export default Footer;
