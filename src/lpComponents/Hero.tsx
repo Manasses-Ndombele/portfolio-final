@@ -71,8 +71,8 @@ const HeroSection: FC = () => {
           >
             Sites profissionais que fazem seu negócio aparecer no Google quando
             novos clientes procuram por serviços. Mais visibilidade, mais
-            contactos, mais vendas. Ajudo a entender da tecnologia e marketing
-            digital.
+            contactos, mais vendas - sem precisar entender de tecnologia e
+            marketing digital.
           </p>
 
           <CTAButton href="https://wa.me/244955127247">FALE COMIGO</CTAButton>
