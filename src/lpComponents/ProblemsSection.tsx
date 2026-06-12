@@ -53,7 +53,7 @@ const ProblemsSection: FC = () => {
 
         {/* Photo */}
         <div
-          className="flex justify-center transition-all duration-[900ms] ease-out delay-200"
+          className="hidden lg:flex justify-center transition-all duration-[900ms] ease-out delay-200"
           style={{
             opacity: visible ? 1 : 0,
             transform: visible ? "translateX(0)" : "translateX(50px)",

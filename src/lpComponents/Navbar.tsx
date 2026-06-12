@@ -18,10 +18,12 @@ const Navbar: FC = () => {
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
+  const hasSolidBg = scrolled || open;
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled
+        hasSolidBg
           ? "bg-[#111827]/90 backdrop-blur-md border-b border-[#60A5FA]/10 shadow-xl shadow-black/30"
           : "bg-transparent"
       }`}
@@ -79,7 +81,7 @@ const Navbar: FC = () => {
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ${
           open ? "max-h-64 border-t border-[#60A5FA]/15" : "max-h-0"
-        } bg-[#111827]/97`}
+        } bg-[#111827]`}
       >
         {NAV_LINKS.map((n) => (
           <a

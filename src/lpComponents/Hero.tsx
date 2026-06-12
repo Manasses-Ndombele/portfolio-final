@@ -28,7 +28,7 @@ const HeroSection: FC = () => {
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-16 w-full grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-16 w-full grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
         {/* Text block */}
         <div
           className="transition-all duration-[900ms] ease-out"

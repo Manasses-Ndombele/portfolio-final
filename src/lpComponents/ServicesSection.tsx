@@ -33,7 +33,7 @@ const ServicesSection: FC = () => {
       className="py-24 px-6"
       style={{ background: "linear-gradient(180deg,#1F2937 0%,#111827 100%)" }}
     >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-16 items-start">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[280px_1fr] gap-16 items-start">
         {/* Left col: heading + photo */}
         <div>
           <SectionHeading>O QUE EU POSSO FAZER POR VOCÊ?</SectionHeading>
