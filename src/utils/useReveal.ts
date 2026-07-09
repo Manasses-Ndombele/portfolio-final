@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
 // ─── Intersection observer hook ───────────────────────────────────────────────
-function useReveal(threshold = 0.12) {
+function useReveal(threshold = 0.4) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   useEffect(() => {

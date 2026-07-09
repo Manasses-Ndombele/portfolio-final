@@ -2,10 +2,10 @@ import { FC } from "react";
 import useReveal from "../utils/useReveal";
 
 const ABOUT_PARAGRAPHS = [
-  "Olá! Meu nome é Manasses Ndombelee e nos últimos 5 anos ajudei dezenas de negócios a conquistarem clientes através da internet.",
-  "Criei mais de 10 sites profissionais para empresas no Brasil e em Angola, e implementei estratégias de marketing digital que geraram resultados reais: negócios que passaram a receber contactos diários, lojas que dependiam só de indicações começaram a vender online.",
-  "Trabalho com criação de sites, SEO (posicionamento no Google) e presença digital estratégica. Não faço só sites bonitos – faço sites que vendem e atraem clientes de verdade.",
-  "Se o seu negócio precisa crescer online mas você não sabe por onde começar, eu cuido de tudo: desde a criação do site até fazer seu negócio aparecer quando clientes procuram no Google.",
+  "Olá! Meu nome é Manassés Ndombele e sou programador web full stack apaixonado por criar soluções digitais profissionais.",
+  "Ao longo dos últimos 5 anos, estudei de forma autodidata desenvolvimento web, copywritting, SEO e marketing digital, construindo uma base sólida de conhecimentos e aplicando essas competências em projetos de portfólio e projetos reais.",
+  "Desenvolvo sites rápidos, modernos e responsivos, pensados para transmitir credibilidade, fortalecer a presença digital e facilitar que negócios sejam encontrados pelos seus clientes.",
+  "Acredito que um site deve ir além de um bom design: ele precisa representar bem a marca, oferecer uma excelente experiência ao utilizador e contribuir para os objetivos do negócio. É por isso que procuro unir tecnologia, estratégia e atenção aos detalhes em cada projeto que desenvolvo.",
 ];
 
 // ─── About ────────────────────────────────────────────────────────────────────
@@ -53,7 +53,7 @@ const AboutSection: FC = () => {
         >
           <h2
             className="font-black text-[#60A5FA] text-2xl md:text-3xl tracking-tight mb-3"
-            style={{ fontFamily: '"Mona Sans", ui-sans-serif, system-ui' }}
+            style={{ fontFamily: '"Inter", sans-serif' }}
           >
             QUEM SOU EU?
           </h2>
@@ -66,7 +66,7 @@ const AboutSection: FC = () => {
               <p
                 key={i}
                 className="text-[#F5F5F5]/75 text-[0.93rem] leading-[1.8]"
-                style={{ fontFamily: "Poppins, ui-sans-serif" }}
+                style={{ fontFamily: '"Inter", sans-serif' }}
               >
                 {text}
               </p>

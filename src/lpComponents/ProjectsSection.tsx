@@ -13,7 +13,7 @@ import "swiper/css/navigation";
 
 // ─── Projects ─────────────────────────────────────────────────────────────────
 const ProjectsSection: FC = () => {
-  const { ref } = useReveal();
+  const { visible, ref } = useReveal();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleProjectClick = (project: Project) => {
@@ -56,7 +56,7 @@ const ProjectsSection: FC = () => {
             {projects.map((project) => (
               <SwiperSlide key={project.id} className="project-slide">
                 <div
-                  className="relative overflow-hidden rounded-2xl shadow-2xl cursor-pointer group h-80 md:h-96"
+                  className={`${visible ? "scale-in-center" : "opacity-0"} relative overflow-hidden rounded-2xl shadow-2xl cursor-pointer group h-80 md:h-96`}
                   onClick={() => handleProjectClick(project)}
                 >
                   <img

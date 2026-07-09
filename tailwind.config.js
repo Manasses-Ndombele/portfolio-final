@@ -4,8 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        monaSans: ['"Mona Sans"', "ui-sans-serif", "system-ui"],
-        poppins: ["Poppins", "ui-sans-serif"],
+        inter: ['"Inter"', "sans-serif"],
       },
     },
   },

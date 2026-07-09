@@ -10,13 +10,6 @@ import CTASection from "../lpComponents/CTASection";
 import Footer from "../lpComponents/Footer";
 
 // ─── Font injection (add to index.html or App.tsx if preferred) ───────────────
-// <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-// Mona Sans: add to your global CSS → @font-face from https://github.githubassets.com/assets/mona-sans.woff2
-//
-// tailwind.config.js → extend fontFamily:
-//   monaSans: ['"Mona Sans"', 'ui-sans-serif', 'system-ui'],
-//   poppins:  ['Poppins', 'ui-sans-serif', 'system-ui'],
-//
 // tailwind.config.js → extend colors:
 //   brand:   { blue: '#60A5FA', dark: '#1F2937', light: '#F5F5F5',
 //              royal: '#245EE3', navy: '#1E3A8A', deepDark: '#111827' }

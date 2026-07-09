@@ -79,14 +79,14 @@ const ServicesSection: FC = () => {
                 <h3
                   className="text-white text-xl font-bold mb-3"
                   style={{
-                    fontFamily: '"Mona Sans", ui-sans-serif, system-ui',
+                    fontFamily: '"Inter", sans-serif',
                   }}
                 >
                   {s.title}
                 </h3>
                 <p
                   className="text-[#F5F5F5]/70 text-sm leading-[1.75]"
-                  style={{ fontFamily: "Poppins, ui-sans-serif" }}
+                  style={{ fontFamily: '"Inter", sans-serif' }}
                 >
                   {s.description}
                 </p>

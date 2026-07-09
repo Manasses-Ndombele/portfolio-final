@@ -12,16 +12,15 @@ const SkillsSection: FC = () => {
       <div className="max-w-7xl mx-auto text-center">
         <SectionHeading centered>MINHAS HABILIDADES TÉCNICAS</SectionHeading>
         <div
-          className="mt-4 overflow-hidden relative"
+          className="skills-container mt-4 overflow-hidden relative"
           onMouseEnter={() => setSkillsPaused(true)}
           onMouseLeave={() => setSkillsPaused(false)}
         >
           <div
-            className="flex gap-8"
+            className="skills-scroll flex gap-8"
             style={{
-              animation: `skillsScroll 30s linear infinite`,
               animationPlayState: skillsPaused ? "paused" : "running",
-              width: "max-content",
+              WebkitAnimationPlayState: skillsPaused ? "paused" : "running",
             }}
           >
             {[...skills, ...skills].map(({ name, Icon }, i) => (

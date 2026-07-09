@@ -32,9 +32,9 @@ const Navbar: FC = () => {
         {/* Logo */}
         <span
           className="text-xl font-black tracking-tight text-[#60A5FA]"
-          style={{ fontFamily: '"Mona Sans", ui-sans-serif, system-ui' }}
+          style={{ fontFamily: '"Inter", sans-serif' }}
         >
-          Manasses<span className="text-white">.</span>
+          MANASSES<span className="text-white">.dev</span>
         </span>
 
         {/* Desktop links */}
@@ -43,8 +43,8 @@ const Navbar: FC = () => {
             <li key={n.label}>
               <a
                 href={n.href}
-                className="font-poppins text-[#F5F5F5]/80 hover:text-[#60A5FA] text-sm font-medium tracking-wide transition-colors duration-200"
-                style={{ fontFamily: "Poppins, ui-sans-serif" }}
+                className="text-[#F5F5F5]/80 hover:text-[#60A5FA] text-sm font-medium tracking-wide transition-colors duration-200"
+                style={{ fontFamily: '"Inter", sans-serif' }}
               >
                 {n.label}
               </a>
@@ -89,7 +89,7 @@ const Navbar: FC = () => {
             href={n.href}
             onClick={() => setOpen(false)}
             className="block px-6 py-4 text-[#F5F5F5] font-medium text-base border-b border-white/5 hover:text-[#60A5FA] transition-colors"
-            style={{ fontFamily: "Poppins, ui-sans-serif" }}
+            style={{ fontFamily: '"Inter", sans-serif' }}
           >
             {n.label}
           </a>

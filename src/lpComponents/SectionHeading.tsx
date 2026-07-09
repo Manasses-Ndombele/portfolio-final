@@ -8,7 +8,7 @@ const SectionHeading: FC<{ children: ReactNode; centered?: boolean }> = ({
   <div className={centered ? "flex flex-col items-center mb-14" : "mb-14"}>
     <h2
       className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tight text-white leading-tight"
-      style={{ fontFamily: '"Mona Sans", ui-sans-serif, system-ui' }}
+      style={{ fontFamily: '"Inter", sans-serif' }}
     >
       {children}
     </h2>

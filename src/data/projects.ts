@@ -13,6 +13,16 @@ export const projects: Project[] = [
   },
   {
     id: '2',
+    title: 'Gamestick - Landing Page',
+    description: 'Landing page de produto físico, estilo retrô, feita para promover o Gamestick com pagamento só na entrega.',
+    image: 'https://images.pexels.com/photos/442576/pexels-photo-442576.jpeg?auto=compress&cs=tinysrgb&w=800',
+    cover: '',
+		repository: 'https://github.com/Manasses-Ndombele/gamestick',
+    demo: 'https://gamestick-eosin.vercel.app/',
+    technologies: ['React', 'TypeScript', 'Tailwind CSS'],
+  },
+  {
+    id: '3',
     title: 'V.S.F Landing page',
     description: 'Página de vendas com design minimalista e arrojado, criada para maximizar conversões de um curso online.',
     image: 'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=800',
@@ -22,7 +32,7 @@ export const projects: Project[] = [
     technologies: ['React', 'TypeScript', 'Tailwind CSS'],
   },
 	{
-    id: '3',
+    id: '4',
     title: 'MoveUp Gym - Academia',
     description: 'Site institucional de academia com layout motivador, transmitindo energia e profissionalismo para atrair novos alunos.',
     image: 'https://images.pexels.com/photos/34093147/pexels-photo-34093147.jpeg?auto=compress&cs=tinysrgb&w=800',
@@ -32,7 +42,7 @@ export const projects: Project[] = [
     technologies: ['React', 'TypeScript', 'Tailwind CSS'],
   },
 	{
-    id: '4',
+    id: '5',
     title: 'Beleza Viva - Clínica de Estética',
     description: 'Site institucional “Beleza Viva” transmite elegância e exclusividade, refletindo serviços estéticos premium com sofisticação.',
     image: 'https://images.pexels.com/photos/16120497/pexels-photo-16120497.jpeg?auto=compress&cs=tinysrgb&w=800',
@@ -42,7 +52,7 @@ export const projects: Project[] = [
     technologies: ['React', 'TypeScript', 'Tailwind CSS'],
   },
   {
-    id: '5',
+    id: '6',
     title: 'Nelson Gaspar - Landing Page',
     description: 'Landing page de Nelson Gaspar: autoridade empreendedora com design matador e catálogo de cursos impactantes.',
     image: 'https://images.pexels.com/photos/7676402/pexels-photo-7676402.jpeg?auto=compress&cs=tinysrgb&w=800',
@@ -52,7 +62,7 @@ export const projects: Project[] = [
     technologies: ['NextJS', 'TypeScript', 'Tailwind CSS'],
   },
 	{
-    id: '6',
+    id: '7',
     title: 'Greicy Santos - UGC Creator',
     description: 'Portfólio da Greicy Santos: reforça sua identidade e autoridade como UGC Creator e modelo de forma impactante.',
     image: 'https://images.pexels.com/photos/1055691/pexels-photo-1055691.jpeg?auto=compress&cs=tinysrgb&w=800',
@@ -62,7 +72,7 @@ export const projects: Project[] = [
     technologies: ['React', 'TypeScript', 'Tailwind CSS'],
   },
 	{
-    id: '7',
+    id: '8',
     title: 'Paulo Borges - Advocacia',
     description: 'Portfólio do advogado Paulo Borges: autoridade jurídica e resultados que inspiram confiança e credibilidade.',
     image: 'https://images.pexels.com/photos/5669602/pexels-photo-5669602.jpeg?auto=compress&cs=tinysrgb&w=800',

@@ -41,7 +41,7 @@ const HeroSection: FC = () => {
           <div className="inline-flex items-center gap-2 border border-[#60A5FA]/30 bg-[#60A5FA]/10 rounded-full px-4 py-1.5 mb-6">
             <span
               className="text-[#60A5FA] text-xs font-semibold tracking-[0.1em] uppercase"
-              style={{ fontFamily: "Poppins, ui-sans-serif" }}
+              style={{ fontFamily: '"Inter", sans-serif' }}
             >
               Fullstack Web Developer
             </span>
@@ -49,7 +49,7 @@ const HeroSection: FC = () => {
 
           <h1
             className="font-black text-white leading-[1.08] tracking-tight text-4xl md:text-5xl lg:text-[3.25rem] mb-6"
-            style={{ fontFamily: '"Mona Sans", ui-sans-serif, system-ui' }}
+            style={{ fontFamily: '"Inter", sans-serif' }}
           >
             FAÇO SEU NEGÓCIO{" "}
             <span
@@ -67,7 +67,7 @@ const HeroSection: FC = () => {
 
           <p
             className="text-[#F5F5F5]/70 text-base leading-[1.8] mb-10 max-w-[480px]"
-            style={{ fontFamily: "Poppins, ui-sans-serif" }}
+            style={{ fontFamily: '"Inter", sans-serif' }}
           >
             Sites profissionais que fazem seu negócio aparecer no Google quando
             novos clientes procuram por serviços. Mais visibilidade, mais
@@ -99,7 +99,7 @@ const HeroSection: FC = () => {
             <img
               src="/pc.png"
               alt="MacBook Pro"
-              className="relative z-10 w-[22rem] max-w-[540px] drop-shadow-[0_40px_80px_rgba(0,0,0,0.75)]"
+              className="flow relative z-10 w-[22rem] max-w-[540px] drop-shadow-[0_40px_80px_rgba(0,0,0,0.75)]"
             />
           </div>
         </div>

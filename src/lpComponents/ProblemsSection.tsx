@@ -42,7 +42,7 @@ const ProblemsSection: FC = () => {
                 </span>
                 <p
                   className="text-[#F5F5F5]/85 text-sm leading-relaxed"
-                  style={{ fontFamily: "Poppins, ui-sans-serif" }}
+                  style={{ fontFamily: '"Inter", sans-serif' }}
                 >
                   {p.text}
                 </p>
