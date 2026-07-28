@@ -31,7 +31,7 @@ const Navbar: FC = () => {
       <nav className="max-w-7xl mx-auto px-6 h-[72px] flex items-center justify-between">
         {/* Logo */}
         <span
-          className="text-xl font-black tracking-tight text-[#60A5FA]"
+          className="text-xl font-black tracking-tight text-[#60A5FA] cursor-pointer"
           style={{ fontFamily: '"Inter", sans-serif' }}
         >
           MANASSES<span className="text-white">.dev</span>

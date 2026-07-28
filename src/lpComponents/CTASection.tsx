@@ -4,7 +4,7 @@ import CTAButton from "./CTAButton";
 
 // ─── CTA ─────────────────────────────────────────────────────────────────────
 const CTASection: FC = () => {
-  const { ref, visible } = useReveal();
+  const { ref, visible } = useReveal(0.3);
 
   return (
     <section

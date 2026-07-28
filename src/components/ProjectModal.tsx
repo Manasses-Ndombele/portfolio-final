@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ExternalLink, Github } from 'lucide-react';
+import { X, ExternalLink } from 'lucide-react';
 import type { Project } from '../types';
 
 interface ProjectModalProps {
@@ -8,13 +8,18 @@ interface ProjectModalProps {
   onClose: () => void;
 }
 
-export const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
+export const ProjectModal = ({
+  project,
+  isOpen,
+  onClose,
+}: ProjectModalProps) => {
   if (!project) return null;
 
   return (
     <AnimatePresence>
       {isOpen && (
         <>
+          {/* Overlay */}
           <motion.div
             className="fixed inset-0 bg-black/80 z-50"
             initial={{ opacity: 0 }}
@@ -22,86 +27,113 @@ export const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) =>
             exit={{ opacity: 0 }}
             onClick={onClose}
           />
-          <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
+
+          {/* Modal Container */}
+          <div className="fixed inset-0 z-50 overflow-y-auto p-4 flex justify-center items-start sm:items-center">
             <motion.div
-              className="bg-gray-900 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-              initial={{ opacity: 0, scale: 0.8, y: 20 }}
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.8, y: 20 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ duration: 0.3 }}
+              onClick={(e) => e.stopPropagation()}
+              className="
+                relative
+                w-full
+                max-w-4xl
+                bg-gray-900
+                rounded-2xl
+                overflow-y-auto
+                max-h-[calc(100dvh-2rem)]
+                shadow-2xl
+              "
             >
-              <div className="relative">
-                {/* Close Button */}
+              {/* Botão Fechar */}
+              <div className="sticky top-0 z-50 flex justify-end p-4 pointer-events-none">
                 <button
                   onClick={onClose}
-                  className="absolute top-4 right-4 z-10 p-2 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors"
+                  className="
+                    pointer-events-auto
+                    p-2
+                    rounded-full
+                    bg-black/70
+                    backdrop-blur-md
+                    text-white
+                    hover:bg-black
+                    transition-colors
+                    shadow-lg
+                  "
                 >
                   <X className="w-6 h-6" />
                 </button>
+              </div>
 
-                {/* Project Image */}
-                <div className="relative h-64 md:h-80 overflow-hidden rounded-t-2xl">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+              {/* Imagem */}
+              <div className="relative h-56 sm:h-64 md:h-80 -mt-16 overflow-hidden rounded-t-2xl">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              </div>
+
+              {/* Conteúdo */}
+              <div className="p-5 sm:p-6 md:p-8">
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+                  {project.title}
+                </h3>
+
+                <p className="text-base md:text-lg text-gray-300 leading-relaxed mb-6">
+                  {project.description}
+                </p>
+
+                {/* Tecnologias */}
+                <div className="mb-8">
+                  <h4 className="text-lg font-semibold text-white mb-3">
+                    Tecnologias utilizadas:
+                  </h4>
+
+                  <div className="flex flex-wrap gap-2">
+                    {project.technologies.map((tech, index) => (
+                      <span
+                        key={index}
+                        className="px-3 py-1 bg-blue-900 text-blue-200 rounded-full text-sm font-medium"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
-                {/* Project Details */}
-                <div className="p-8">
-                  <h3 className="text-3xl font-bold text-white mb-4">
-                    {project.title}
-                  </h3>
-                  
-                  <p className="text-lg text-gray-300 mb-6 leading-relaxed">
-                    {project.description}
-                  </p>
-
-                  {/* Technologies */}
-                  <div className="mb-8">
-                    <h4 className="text-lg font-semibold text-white mb-3">
-                      Tecnologias utilizadas:
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {project.technologies.map((tech, index) => (
-                        <span
-                          key={index}
-                          className="px-3 py-1 bg-blue-900 text-blue-200 rounded-full text-sm font-medium"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <motion.a
-                      href={project.repository}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center px-6 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors font-medium"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <Github className="w-5 h-5 mr-2" />
-                      Ver repositório
-                    </motion.a>
-                    
-                    <motion.a
-                      href={project.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all font-medium"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <ExternalLink className="w-5 h-5 mr-2" />
-                      Abrir projeto
-                    </motion.a>
-                  </div>
+                {/* Botões */}
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <motion.a
+                    href={project.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="
+                      flex
+                      items-center
+                      justify-center
+                      px-6
+                      py-3
+                      rounded-lg
+                      text-white
+                      font-medium
+                      bg-gradient-to-r
+                      from-blue-600
+                      to-blue-700
+                      hover:from-blue-700
+                      hover:to-blue-800
+                      transition-all
+                    "
+                  >
+                    <ExternalLink className="w-5 h-5 mr-2" />
+                    Abrir projeto
+                  </motion.a>
                 </div>
               </div>
             </motion.div>

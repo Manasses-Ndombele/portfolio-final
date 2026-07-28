@@ -5,6 +5,7 @@
 @layer base {
   body {
     font-family: "Inter", sans-serif;
+    overflow-x: hidden;
   }
 }
 
@@ -224,9 +225,9 @@ html {
 }
 
 .puff-in-center {
-  -webkit-animation: puff-in-center 0.7s cubic-bezier(0.47, 0, 0.745, 0.715)
+  -webkit-animation: puff-in-center 0.4s cubic-bezier(0.47, 0, 0.745, 0.715)
     both;
-  animation: puff-in-center 0.7s cubic-bezier(0.47, 0, 0.745, 0.715) both;
+  animation: puff-in-center 0.4s cubic-bezier(0.47, 0, 0.745, 0.715) both;
 }
 
 .scale-in-center {
@@ -411,7 +412,7 @@ html {
 }
 
 .skills-scroll {
-  -webkit-animation: skillsScroll 30s linear infinite;
-  animation: skillsScroll 30s linear infinite;
+  -webkit-animation: skillsScroll 15s linear infinite;
+  animation: skillsScroll 40s linear infinite;
   width: max-content;
 }

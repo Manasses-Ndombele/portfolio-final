@@ -68,8 +68,8 @@ const ProblemsSection: FC = () => {
               }}
             />
             <img
-              src="/me 1.jpg"
-              alt="Manasses Ndombelee"
+              src="/me 1.webp"
+              alt="Manasses Ndombele"
               className="relative z-10 w-full max-w-[420px] drop-shadow-[0_30px_60px_rgba(0,0,0,0.65)]"
             />
           </div>

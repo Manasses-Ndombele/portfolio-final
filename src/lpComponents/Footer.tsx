@@ -7,7 +7,7 @@ const Footer: FC = () => (
       className="text-[#F5F5F5]/40 text-xs tracking-[0.06em] uppercase"
       style={{ fontFamily: '"Inter", sans-serif' }}
     >
-      COPYRIGHT © 2026 MANASSES NDOMBELEE · PROGRAMADOR WEB FULLSTACK
+      COPYRIGHT © 2026 MANASSES NDOMBELE · PROGRAMADOR WEB FULLSTACK
     </p>
   </footer>
 );
