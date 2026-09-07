@@ -35,7 +35,7 @@ const AboutSection: FC = () => {
           >
             <div className="w-full h-full rounded-full overflow-hidden bg-[#1F2937]">
               <img
-                src="/me 2.png"
+                src="/me 3.jpg"
                 alt="Manasses"
                 className="w-full h-full object-cover"
               />

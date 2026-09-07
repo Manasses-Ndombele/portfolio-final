@@ -42,7 +42,7 @@ const CTASection: FC = () => {
           Vamos Conversar Sobre Como Posso Ajudar Você A Aparecer No Google, Ter
           Uma Imagem Profissional E Conquistar Mais Clientes.
         </p>
-        <CTAButton href="https://wa.me/244955127247" dark>
+        <CTAButton href="https://wa.me/244946090705" dark>
           FALE COMIGO
         </CTAButton>
       </div>

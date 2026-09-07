@@ -6,6 +6,7 @@ import {
   FaGitAlt,
   FaWordpress,
   FaElementor,
+  FaWix,
 } from "react-icons/fa";
 import {
   SiPhp,
@@ -55,4 +56,5 @@ export const skills: Skill[] = [
   { name: "Docker", Icon: IoLogoDocker, category: "other" },
   { name: "Figma", Icon: CgFigma, category: "other" },
   { name: "Linux", Icon: DiLinux, category: "other" },
+  { name: "Wix", Icon: FaWix, category: "other" },
 ];

@@ -38,7 +38,7 @@ const ServicesSection: FC = () => {
         <div>
           <SectionHeading>O QUE EU POSSO FAZER POR VOCÊ?</SectionHeading>
           <img
-            src="/me 2.webp"
+            src="/me 2.jpg"
             alt="Manasses"
             className="w-full rounded-3xl drop-shadow-[0_20px_40px_rgba(0,0,0,0.55)]"
           />

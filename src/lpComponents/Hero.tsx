@@ -75,7 +75,7 @@ const HeroSection: FC = () => {
             marketing digital.
           </p>
 
-          <CTAButton href="https://wa.me/244955127247">FALE COMIGO</CTAButton>
+          <CTAButton href="https://wa.me/244946090705">FALE COMIGO</CTAButton>
         </div>
 
         {/* Laptop image */}
