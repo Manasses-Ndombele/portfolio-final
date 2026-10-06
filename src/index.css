@@ -389,30 +389,3 @@ html {
     transition-duration: 0.01ms !important;
   }
 }
-
-.skills-container::before,
-.skills-container::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 6rem;
-  z-index: 10;
-  pointer-events: none;
-}
-
-.skills-container::before {
-  left: 0;
-  background: linear-gradient(to right, #111827, transparent);
-}
-
-.skills-container::after {
-  right: 0;
-  background: linear-gradient(to left, #111827, transparent);
-}
-
-.skills-scroll {
-  -webkit-animation: skillsScroll 15s linear infinite;
-  animation: skillsScroll 40s linear infinite;
-  width: max-content;
-}

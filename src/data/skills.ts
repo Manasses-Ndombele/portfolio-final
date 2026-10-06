@@ -51,10 +51,10 @@ export const skills: Skill[] = [
   // Other
   { name: "Wordpress", Icon: FaWordpress, category: "other" },
   { name: "Elementor", Icon: FaElementor, category: "other" },
+  { name: "Wix", Icon: FaWix, category: "other" },
   { name: "JSON", Icon: LuFileJson, category: "other" },
   { name: "Git", Icon: FaGitAlt, category: "other" },
   { name: "Docker", Icon: IoLogoDocker, category: "other" },
   { name: "Figma", Icon: CgFigma, category: "other" },
   { name: "Linux", Icon: DiLinux, category: "other" },
-  { name: "Wix", Icon: FaWix, category: "other" },
 ];
