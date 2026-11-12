@@ -1,0 +1,31 @@
+{
+  "name": "manasses-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "setup:reactbits": "bash scripts/install-reactbits.sh"
+  },
+  "dependencies": {
+    "gsap": "^3.15.1",
+    "motion": "^11.11.17",
+    "next": "14.2.15",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "5.3.0",
+    "swiper": "^11.1.14",
+    "vgpu": "^0.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "shadcn": "latest",
+    "tailwindcss": "^3.4.14",
+    "typescript": "^5"
+  }
+}
