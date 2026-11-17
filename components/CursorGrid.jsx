@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import './CursorGrid.css';
+import { useEffect, useRef } from "react";
+import "./CursorGrid.css";
 
 const INTRO_SECONDS = 1.4;
 const STYLES = { lines: 0, dashed: 1, dots: 2, crosses: 3 };
 
 const FALLOFF_CURVES = {
-  linear: t => t,
-  smooth: t => t * t * (3 - 2 * t),
-  sharp: t => t * t * t
+  linear: (t) => t,
+  smooth: (t) => t * t * (3 - 2 * t),
+  sharp: (t) => t * t * t,
 };
 
 const VERTEX = `#version 300 es
@@ -154,7 +154,7 @@ const compile = (gl, type, source) => {
   return null;
 };
 
-const link = gl => {
+const link = (gl) => {
   const vertex = compile(gl, gl.VERTEX_SHADER, VERTEX);
   const fragment = compile(gl, gl.FRAGMENT_SHADER, FRAGMENT);
   const program = gl.createProgram();
@@ -179,22 +179,26 @@ const link = gl => {
 
 const colorCache = new Map();
 
-const parseHex = hex => {
-  let h = String(hex || '#ffffff')
-    .replace('#', '')
+const parseHex = (hex) => {
+  let h = String(hex || "#ffffff")
+    .replace("#", "")
     .trim();
   if (h.length === 3 || h.length === 4)
     h = h
       .slice(0, 3)
-      .split('')
-      .map(c => c + c)
-      .join('');
+      .split("")
+      .map((c) => c + c)
+      .join("");
   const num = parseInt(h.slice(0, 6), 16);
   if (Number.isNaN(num)) return [1, 1, 1];
-  return [((num >> 16) & 255) / 255, ((num >> 8) & 255) / 255, (num & 255) / 255];
+  return [
+    ((num >> 16) & 255) / 255,
+    ((num >> 8) & 255) / 255,
+    (num & 255) / 255,
+  ];
 };
 
-const hexToRgb = hex => {
+const hexToRgb = (hex) => {
   const key = String(hex);
   const cached = colorCache.get(key);
   if (cached) return cached;
@@ -209,15 +213,15 @@ const CursorGrid = ({
   color,
   gridColor,
   radius = 140,
-  falloff = 'smooth',
-  highlight = 'area',
+  falloff = "smooth",
+  highlight = "area",
   holdTime = 400,
   fadeDuration = 800,
   lineWidth = 1,
   maxOpacity = 1,
   fillOpacity = 0.06,
   gridOpacity = 0.08,
-  gridStyle = 'lines',
+  gridStyle = "lines",
   cellRadius = 0,
   cellGap = 0,
   spotlight = 0.6,
@@ -229,13 +233,13 @@ const CursorGrid = ({
   lightMode = false,
   dpr,
   children,
-  className = '',
-  style
+  className = "",
+  style,
 }) => {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
   const wakeRef = useRef(null);
-  const ink = lightMode ? '#18181b' : '#ffffff';
+  const ink = lightMode ? "#18181b" : "#ffffff";
   const settings = {
     cellSize: Math.max(8, cellSize),
     color: color || ink,
@@ -258,7 +262,7 @@ const CursorGrid = ({
     ambient: clamp(ambient, 0, 1),
     edgeFade: clamp(edgeFade, 0, 0.5),
     intro,
-    dpr
+    dpr,
   };
   const settingsRef = useRef(settings);
   settingsRef.current = settings;
@@ -266,12 +270,12 @@ const CursorGrid = ({
   useEffect(() => {
     const container = containerRef.current;
     const canvas = canvasRef.current;
-    const gl = canvas?.getContext('webgl2', {
+    const gl = canvas?.getContext("webgl2", {
       alpha: true,
       premultipliedAlpha: true,
       antialias: false,
       depth: false,
-      stencil: false
+      stencil: false,
     });
     if (!container || !canvas || !gl) return undefined;
     const shader = link(gl);
@@ -286,7 +290,8 @@ const CursorGrid = ({
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
     gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
 
-    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+    const reduce =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
     const view = { width: 1, height: 1, ratio: 1, cellSize: 0 };
     const grid = { cols: 0, rows: 0, offX: 0, offY: 0 };
     const pointer = { x: 0, y: 0, inside: false };
@@ -315,7 +320,8 @@ const CursorGrid = ({
       const size = s.cellSize;
       const cols = Math.ceil(view.width / size) + 1;
       const rows = Math.ceil(view.height / size) + 1;
-      const resized = cols !== grid.cols || rows !== grid.rows || size !== view.cellSize;
+      const resized =
+        cols !== grid.cols || rows !== grid.rows || size !== view.cellSize;
       grid.cols = cols;
       grid.rows = rows;
       grid.offX = (view.width - cols * size) / 2;
@@ -328,7 +334,17 @@ const CursorGrid = ({
         touched = new Float32Array(cols * rows).fill(-1e9);
         pixels = new Uint8Array(cols * rows);
         gl.bindTexture(gl.TEXTURE_2D, stateTexture);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.R8, cols, rows, 0, gl.RED, gl.UNSIGNED_BYTE, pixels);
+        gl.texImage2D(
+          gl.TEXTURE_2D,
+          0,
+          gl.R8,
+          cols,
+          rows,
+          0,
+          gl.RED,
+          gl.UNSIGNED_BYTE,
+          pixels,
+        );
       }
       dirty = true;
     };
@@ -341,18 +357,25 @@ const CursorGrid = ({
     const energize = (x, y) => {
       const s = settingsRef.current;
       const size = s.cellSize;
-      if (s.highlight === 'cell') {
+      if (s.highlight === "cell") {
         const col = Math.floor((x - grid.offX) / size);
         const row = Math.floor((y - grid.offY) / size);
-        if (col >= 0 && row >= 0 && col < grid.cols && row < grid.rows) light(row * grid.cols + col, 1);
+        if (col >= 0 && row >= 0 && col < grid.cols && row < grid.rows)
+          light(row * grid.cols + col, 1);
         return;
       }
       const r = s.radius;
       const ease = FALLOFF_CURVES[s.falloff] ?? FALLOFF_CURVES.linear;
       const minCol = Math.max(0, Math.floor((x - r - grid.offX) / size));
-      const maxCol = Math.min(grid.cols - 1, Math.floor((x + r - grid.offX) / size));
+      const maxCol = Math.min(
+        grid.cols - 1,
+        Math.floor((x + r - grid.offX) / size),
+      );
       const minRow = Math.max(0, Math.floor((y - r - grid.offY) / size));
-      const maxRow = Math.min(grid.rows - 1, Math.floor((y + r - grid.offY) / size));
+      const maxRow = Math.min(
+        grid.rows - 1,
+        Math.floor((y + r - grid.offY) / size),
+      );
       for (let row = minRow; row <= maxRow; row++) {
         for (let col = minCol; col <= maxCol; col++) {
           const cx = grid.offX + col * size + size / 2;
@@ -365,7 +388,7 @@ const CursorGrid = ({
       }
     };
 
-    const sweepPulses = s => {
+    const sweepPulses = (s) => {
       const size = s.cellSize;
       const ahead = size * 0.6;
       const behind = size * 1.4;
@@ -379,12 +402,26 @@ const CursorGrid = ({
           continue;
         }
         if (ringR < 0) continue;
-        const envelope = pulse.strength * Math.pow(Math.max(0, 1 - ringR / (far + behind)), 0.6);
+        const envelope =
+          pulse.strength *
+          Math.pow(Math.max(0, 1 - ringR / (far + behind)), 0.6);
         const outer = ringR + ahead * 2;
-        const minCol = Math.max(0, Math.floor((pulse.x - outer - grid.offX) / size));
-        const maxCol = Math.min(grid.cols - 1, Math.floor((pulse.x + outer - grid.offX) / size));
-        const minRow = Math.max(0, Math.floor((pulse.y - outer - grid.offY) / size));
-        const maxRow = Math.min(grid.rows - 1, Math.floor((pulse.y + outer - grid.offY) / size));
+        const minCol = Math.max(
+          0,
+          Math.floor((pulse.x - outer - grid.offX) / size),
+        );
+        const maxCol = Math.min(
+          grid.cols - 1,
+          Math.floor((pulse.x + outer - grid.offX) / size),
+        );
+        const minRow = Math.max(
+          0,
+          Math.floor((pulse.y - outer - grid.offY) / size),
+        );
+        const maxRow = Math.min(
+          grid.rows - 1,
+          Math.floor((pulse.y + outer - grid.offY) / size),
+        );
         for (let row = minRow; row <= maxRow; row++) {
           for (let col = minCol; col <= maxCol; col++) {
             const cx = grid.offX + col * size + size / 2;
@@ -413,15 +450,31 @@ const CursorGrid = ({
       gl.bindTexture(gl.TEXTURE_2D, stateTexture);
       if (dirty) {
         for (let i = 0; i < levels.length; i++)
-          pixels[i] = Math.round(clamp(Math.max(levels[i], waves[i]), 0, 1) * 255);
-        gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, grid.cols, grid.rows, gl.RED, gl.UNSIGNED_BYTE, pixels);
+          pixels[i] = Math.round(
+            clamp(Math.max(levels[i], waves[i]), 0, 1) * 255,
+          );
+        gl.texSubImage2D(
+          gl.TEXTURE_2D,
+          0,
+          0,
+          0,
+          grid.cols,
+          grid.rows,
+          gl.RED,
+          gl.UNSIGNED_BYTE,
+          pixels,
+        );
         dirty = false;
       }
       const lineDevice = s.lineWidth * ratio;
       const snap = Math.round(lineDevice) % 2 === 1 ? 0.5 : 0;
       gl.uniform1i(u.uState, 0);
       gl.uniform2f(u.uResolution, canvas.width, canvas.height);
-      gl.uniform2f(u.uOffset, Math.round(grid.offX * ratio) + snap, Math.round(grid.offY * ratio) + snap);
+      gl.uniform2f(
+        u.uOffset,
+        Math.round(grid.offX * ratio) + snap,
+        Math.round(grid.offY * ratio) + snap,
+      );
       gl.uniform1f(u.uCellSize, s.cellSize * ratio);
       gl.uniform2i(u.uCells, grid.cols, grid.rows);
       gl.uniform3fv(u.uColor, hexToRgb(s.color));
@@ -438,19 +491,23 @@ const CursorGrid = ({
       gl.uniform1f(u.uSpotlight, s.spotlight);
       gl.uniform1f(u.uPresence, presence);
       gl.uniform1f(u.uEdgeFade, s.edgeFade);
-      gl.uniform1f(u.uReveal, introClock >= 1 ? 1 : 1 - Math.pow(1 - introClock, 2.2));
+      gl.uniform1f(
+        u.uReveal,
+        introClock >= 1 ? 1 : 1 - Math.pow(1 - introClock, 2.2),
+      );
       gl.drawArrays(gl.TRIANGLES, 0, 3);
       gl.bindVertexArray(null);
     };
 
-    const frame = now => {
+    const frame = (now) => {
       raf = 0;
       if (!visible || document.hidden) return;
       const s = settingsRef.current;
       const dt = last ? clamp((now - last) / 1000, 0, 1 / 20) : 1 / 60;
       last = now;
       clock += dt;
-      if (introClock < 1) introClock = Math.min(1, introClock + dt / INTRO_SECONDS);
+      if (introClock < 1)
+        introClock = Math.min(1, introClock + dt / INTRO_SECONDS);
 
       const follow = 1 - Math.exp(-dt / 0.07);
       mouse.x += (pointer.x - mouse.x) * follow;
@@ -461,10 +518,14 @@ const CursorGrid = ({
       if (s.ambient > 0 && !reduce && levels.length) {
         const chance = s.ambient * dt * levels.length * 0.04;
         let spawns = Math.floor(chance) + (Math.random() < chance % 1 ? 1 : 0);
-        while (spawns-- > 0) light(Math.floor(Math.random() * levels.length), 0.25 + Math.random() * 0.45);
+        while (spawns-- > 0)
+          light(
+            Math.floor(Math.random() * levels.length),
+            0.25 + Math.random() * 0.45,
+          );
       }
       if (pulses.length) sweepPulses(s);
-      else if (waves.length && waves.some(value => value > 0)) {
+      else if (waves.length && waves.some((value) => value > 0)) {
         waves.fill(0);
         dirty = true;
       }
@@ -472,19 +533,28 @@ const CursorGrid = ({
       const holdSeconds = s.holdTime / 1000;
       const fadeStep = dt / (s.fadeDuration / 1000);
       const attack = 1 - Math.exp(-dt / 0.045);
-      let active = pulses.length > 0 || introClock < 1 || Math.abs(presence - presenceGoal) > 0.002;
+      let active =
+        pulses.length > 0 ||
+        introClock < 1 ||
+        Math.abs(presence - presenceGoal) > 0.002;
       for (let i = 0; i < levels.length; i++) {
         let target = targets[i];
         if (target <= 0 && levels[i] <= 0) continue;
-        if (clock - touched[i] > holdSeconds) target = Math.max(0, target - fadeStep);
+        if (clock - touched[i] > holdSeconds)
+          target = Math.max(0, target - fadeStep);
         targets[i] = target;
         const before = levels[i];
-        const next = target > before ? before + (target - before) * attack : target;
+        const next =
+          target > before ? before + (target - before) * attack : target;
         levels[i] = next < 0.002 ? 0 : next;
         if (levels[i] !== before) dirty = true;
         if (levels[i] > 0 || targets[i] > 0) active = true;
       }
-      if (Math.abs(mouse.x - pointer.x) + Math.abs(mouse.y - pointer.y) > 0.05 && presence > 0.002) active = true;
+      if (
+        Math.abs(mouse.x - pointer.x) + Math.abs(mouse.y - pointer.y) > 0.05 &&
+        presence > 0.002
+      )
+        active = true;
       if (s.ambient > 0 && !reduce) active = true;
 
       draw();
@@ -498,14 +568,18 @@ const CursorGrid = ({
       }
     }
 
-    const locate = event => {
+    const locate = (event) => {
       const rect = container.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
-      return { x, y, inside: x >= 0 && y >= 0 && x <= rect.width && y <= rect.height };
+      return {
+        x,
+        y,
+        inside: x >= 0 && y >= 0 && x <= rect.width && y <= rect.height,
+      };
     };
 
-    const onPointerMove = event => {
+    const onPointerMove = (event) => {
       const { x, y, inside } = locate(event);
       const was = pointer.inside;
       pointer.inside = inside;
@@ -523,7 +597,7 @@ const CursorGrid = ({
       wake();
     };
 
-    const onPointerDown = event => {
+    const onPointerDown = (event) => {
       const s = settingsRef.current;
       const { x, y, inside } = locate(event);
       if (!inside || !s.clickPulse || reduce) return;
@@ -544,17 +618,23 @@ const CursorGrid = ({
       wake();
     });
     resizeObserver.observe(container);
-    const intersection = new IntersectionObserver(entries => {
-      visible = entries.some(entry => entry.isIntersecting);
+    const intersection = new IntersectionObserver((entries) => {
+      visible = entries.some((entry) => entry.isIntersecting);
       if (visible) wake();
     });
     intersection.observe(container);
-    window.addEventListener('pointermove', onPointerMove, { passive: true });
-    window.addEventListener('pointerdown', onPointerDown, { passive: true });
-    document.documentElement.addEventListener('pointerleave', onPointerLeave);
-    document.addEventListener('visibilitychange', onVisibility);
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    window.addEventListener("pointerdown", onPointerDown, { passive: true });
+    document.documentElement.addEventListener("pointerleave", onPointerLeave);
+    document.addEventListener("visibilitychange", onVisibility);
     rebuild();
-    if (introClock < 1) pulses.push({ x: view.width / 2, y: view.height / 2, t0: 0.15, strength: 0.6 });
+    if (introClock < 1)
+      pulses.push({
+        x: view.width / 2,
+        y: view.height / 2,
+        t0: 0.15,
+        strength: 0.6,
+      });
     draw();
     wake();
     wakeRef.current = () => {
@@ -570,14 +650,17 @@ const CursorGrid = ({
       wakeRef.current = null;
       resizeObserver.disconnect();
       intersection.disconnect();
-      window.removeEventListener('pointermove', onPointerMove);
-      window.removeEventListener('pointerdown', onPointerDown);
-      document.documentElement.removeEventListener('pointerleave', onPointerLeave);
-      document.removeEventListener('visibilitychange', onVisibility);
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerdown", onPointerDown);
+      document.documentElement.removeEventListener(
+        "pointerleave",
+        onPointerLeave,
+      );
+      document.removeEventListener("visibilitychange", onVisibility);
       gl.deleteTexture(stateTexture);
       gl.deleteVertexArray(vao);
       gl.deleteProgram(shader.program);
-      gl.getExtension('WEBGL_lose_context')?.loseContext();
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
   }, []);
 
@@ -586,8 +669,16 @@ const CursorGrid = ({
   });
 
   return (
-    <div ref={containerRef} className={`cursor-grid${className ? ` ${className}` : ''}`} style={style}>
-      <canvas ref={canvasRef} className="cursor-grid__canvas" aria-hidden="true" />
+    <div
+      ref={containerRef}
+      className={`cursor-grid${className ? ` ${className}` : ""}`}
+      style={style}
+    >
+      <canvas
+        ref={canvasRef}
+        className="cursor-grid__canvas"
+        aria-hidden="true"
+      />
       {children ? <div className="cursor-grid__content">{children}</div> : null}
     </div>
   );

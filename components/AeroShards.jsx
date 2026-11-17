@@ -1,16 +1,25 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import { draw, frame, init, sampler, storage, surface, target, uniforms } from 'vgpu';
-import './AeroShards.css';
+import { useEffect, useRef } from "react";
+import {
+  draw,
+  frame,
+  init,
+  sampler,
+  storage,
+  surface,
+  target,
+  uniforms,
+} from "vgpu";
+import "./AeroShards.css";
 
-const ROOT = 'aero-shards';
-const CANVAS = 'aero-shards-canvas';
+const ROOT = "aero-shards";
+const CANVAS = "aero-shards-canvas";
 
-const PLACEMENTS = ['full', 'left', 'right', 'center'];
+const PLACEMENTS = ["full", "left", "right", "center"];
 const MATERIALS = {
   glass: [0, 0, 0, 0],
-  chrome: [1, 0, 0, 0]
+  chrome: [1, 0, 0, 0],
 };
 const FLOATS = 24;
 const SAMPLES = 160;
@@ -32,7 +41,7 @@ const MARKER_PHASES = [
   [0.83, 0.12],
   [0.21, 0.88],
   [0.66, 0.44],
-  [0.05, 0.27]
+  [0.05, 0.27],
 ];
 const MAX_RINGS = 4;
 const RING_SECONDS = 2.6;
@@ -42,7 +51,7 @@ const FULL_SLOPES = [
   [-0.72, 0.02],
   [0.58, -0.06],
   [-0.24, 0.62],
-  [0.8, 0.3]
+  [0.8, 0.3],
 ];
 const SIDE_OFFSETS = [0.84, 0.62, 0.44, 0.28, 0.14];
 const RING_SIZES = [
@@ -50,7 +59,7 @@ const RING_SIZES = [
   [0.9, 0.7],
   [0.84, 0.64],
   [0.8, 0.6],
-  [0.76, 0.56]
+  [0.76, 0.56],
 ];
 const TAU = Math.PI * 2;
 
@@ -798,7 +807,7 @@ fn fs_main(@location(0) uv: vec2f, @builtin(position) pixel: vec4f) -> @location
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
-const smoother = x => {
+const smoother = (x) => {
   const t = clamp(x, 0, 1);
   return t * t * t * (t * (t * 6 - 15) + 10);
 };
@@ -806,35 +815,50 @@ const smoother = x => {
 let probe = null;
 
 const parseColor = (value, fallback) => {
-  if (value === 'transparent') return null;
-  if (typeof document === 'undefined') return fallback;
-  if (!probe) probe = document.createElement('canvas').getContext('2d');
+  if (value === "transparent") return null;
+  if (typeof document === "undefined") return fallback;
+  if (!probe) probe = document.createElement("canvas").getContext("2d");
   if (!probe) return fallback;
-  probe.fillStyle = '#000000';
+  probe.fillStyle = "#000000";
   probe.fillStyle = value;
   const text = probe.fillStyle;
-  if (text.startsWith('#')) {
+  if (text.startsWith("#")) {
     const hex = parseInt(text.slice(1), 16);
-    return [((hex >> 16) & 255) / 255, ((hex >> 8) & 255) / 255, (hex & 255) / 255];
+    return [
+      ((hex >> 16) & 255) / 255,
+      ((hex >> 8) & 255) / 255,
+      (hex & 255) / 255,
+    ];
   }
-  const match = /rgba?\(([\d.]+),\s*([\d.]+),\s*([\d.]+)(?:,\s*([\d.]+))?/.exec(text);
+  const match = /rgba?\(([\d.]+),\s*([\d.]+),\s*([\d.]+)(?:,\s*([\d.]+))?/.exec(
+    text,
+  );
   if (!match) return fallback;
   if (match[4] !== undefined && Number(match[4]) === 0) return null;
-  return [Number(match[1]) / 255, Number(match[2]) / 255, Number(match[3]) / 255];
+  return [
+    Number(match[1]) / 255,
+    Number(match[2]) / 255,
+    Number(match[3]) / 255,
+  ];
 };
 
 const prefersReduced = () =>
-  typeof window !== 'undefined' && (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false);
+  typeof window !== "undefined" &&
+  (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false);
 
 const latticeHash = (a, b, c, d) => {
-  let h = Math.imul(a + 0x9e3779b9, 0x85ebca6b) ^ Math.imul(b + 0x632be5ab, 0xc2b2ae35);
-  h ^= Math.imul(c + 0x27d4eb2f, 0x165667b1) ^ Math.imul(d + 0x7f4a7c15, 0x9e3779b1);
+  let h =
+    Math.imul(a + 0x9e3779b9, 0x85ebca6b) ^
+    Math.imul(b + 0x632be5ab, 0xc2b2ae35);
+  h ^=
+    Math.imul(c + 0x27d4eb2f, 0x165667b1) ^
+    Math.imul(d + 0x7f4a7c15, 0x9e3779b1);
   h = Math.imul(h ^ (h >>> 15), 0x2c1b3c6d);
   h = Math.imul(h ^ (h >>> 12), 0x297a2d39);
   return ((h ^ (h >>> 15)) >>> 0) / 4294967296;
 };
 
-const random = seed => () => {
+const random = (seed) => () => {
   seed = (seed + 0x6d2b79f5) | 0;
   let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
   t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
@@ -882,7 +906,8 @@ const createShards = (count, seed) => {
   const shards = [];
   let made = 0;
   for (let level = 0; level < LEVELS; level += 1) {
-    const amount = level === LEVELS - 1 ? count - made : Math.round(count * SHARE[level]);
+    const amount =
+      level === LEVELS - 1 ? count - made : Math.round(count * SHARE[level]);
     made += amount;
     for (let index = 0; index < amount; index += 1) {
       const flat = next() * 2 - 1;
@@ -924,7 +949,9 @@ const createShards = (count, seed) => {
         level,
         phase: (index + next()) / Math.max(amount, 1),
         lane: Math.sign(flat) * Math.pow(Math.abs(flat), 0.85),
-        layer: Math.sqrt(-2 * Math.log(Math.max(next(), 1e-6))) * Math.cos(TAU * next()),
+        layer:
+          Math.sqrt(-2 * Math.log(Math.max(next(), 1e-6))) *
+          Math.cos(TAU * next()),
         size: 0.6 + next() * next() * 1.25,
         shape,
         sides,
@@ -938,7 +965,12 @@ const createShards = (count, seed) => {
         flutter: [next() * TAU, 0.5 + next() * 0.5],
         arrive: next(),
         sign: next() < 0.5 ? -1 : 1,
-        slot: [next() * TAU, 0.06 + 0.3 * Math.sqrt(next()), next() - 0.5, next() < 0.85 ? 1 : -1],
+        slot: [
+          next() * TAU,
+          0.06 + 0.3 * Math.sqrt(next()),
+          next() - 0.5,
+          next() < 0.85 ? 1 : -1,
+        ],
         offset: [0, 0, 0],
         velocity: [0, 0, 0],
         tilt: 0,
@@ -947,7 +979,7 @@ const createShards = (count, seed) => {
         gather: 0,
         joined: false,
         position: [0, 0, 0],
-        s: 0
+        s: 0,
       });
     }
   }
@@ -955,12 +987,12 @@ const createShards = (count, seed) => {
 };
 
 export default function AeroShards({
-  shardColor = '#896ABD',
-  accentColor = '#A855F7',
-  backgroundColor = 'transparent',
+  shardColor = "#896ABD",
+  accentColor = "#A855F7",
+  backgroundColor = "transparent",
   lightMode = false,
-  placement = 'full',
-  material = 'glass',
+  placement = "full",
+  material = "glass",
   count = 1300,
   shardSize = 1,
   spread = 1,
@@ -975,15 +1007,15 @@ export default function AeroShards({
   intro = true,
   mouseInteraction = true,
   mouseStrength = 0.6,
-  markers = 'plus',
+  markers = "plus",
   pulseOnClick = true,
   holdToGather = true,
   parallax = 0.5,
   paused = false,
   dpr = 2,
-  className = '',
+  className = "",
   style,
-  onError
+  onError,
 }) {
   const containerRef = useRef(null);
   const onErrorRef = useRef(onError);
@@ -1015,7 +1047,7 @@ export default function AeroShards({
     holdToGather,
     parallax: clamp(parallax, 0, 1),
     paused,
-    dpr: Math.max(0.5, dpr)
+    dpr: Math.max(0.5, dpr),
   };
   const settingsRef = useRef(settings);
   settingsRef.current = settings;
@@ -1023,7 +1055,7 @@ export default function AeroShards({
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return undefined;
-    const canvas = document.createElement('canvas');
+    const canvas = document.createElement("canvas");
     canvas.className = CANVAS;
     container.appendChild(canvas);
 
@@ -1032,18 +1064,21 @@ export default function AeroShards({
     let raf = 0;
     const cleanups = [];
 
-    const fail = error => {
+    const fail = (error) => {
       if (disposed) return;
       disposed = true;
       cancelAnimationFrame(raf);
       gpu?.dispose();
       gpu = null;
-      onErrorRef.current?.(error instanceof Error ? error : new Error(String(error)));
+      onErrorRef.current?.(
+        error instanceof Error ? error : new Error(String(error)),
+      );
     };
 
     const start = async () => {
-      if (typeof navigator === 'undefined' || !('gpu' in navigator)) throw new Error('WebGPU is not available');
-      const instance = await init({ powerPreference: 'high-performance' });
+      if (typeof navigator === "undefined" || !("gpu" in navigator))
+        throw new Error("WebGPU is not available");
+      const instance = await init({ powerPreference: "high-performance" });
       gpu = instance;
       if (disposed) {
         instance.dispose();
@@ -1052,32 +1087,44 @@ export default function AeroShards({
       cleanups.push(instance.onError(fail));
       const format = navigator.gpu.getPreferredCanvasFormat();
       const sizeFor = () => {
-        const ratio = Math.min(window.devicePixelRatio || 1, settingsRef.current.dpr);
+        const ratio = Math.min(
+          window.devicePixelRatio || 1,
+          settingsRef.current.dpr,
+        );
         return [
           Math.max(1, Math.round(container.clientWidth * ratio)),
-          Math.max(1, Math.round(container.clientHeight * ratio))
+          Math.max(1, Math.round(container.clientHeight * ratio)),
         ];
       };
       const output = surface(instance, canvas, {
         autoResize: false,
         size: sizeFor(),
         format,
-        alphaMode: 'premultiplied'
+        alphaMode: "premultiplied",
       });
       const linear = sampler(instance, {
-        minFilter: 'linear',
-        magFilter: 'linear',
-        addressModeU: 'clamp-to-edge',
-        addressModeV: 'clamp-to-edge'
+        minFilter: "linear",
+        magFilter: "linear",
+        addressModeU: "clamp-to-edge",
+        addressModeV: "clamp-to-edge",
       });
-      const scene = target(instance, { size: output.size, format: 'rgba16float' });
-      const levelSize = index => [
+      const scene = target(instance, {
+        size: output.size,
+        format: "rgba16float",
+      });
+      const levelSize = (index) => [
         Math.max(1, Math.round(output.size[0] / 2 ** (index + 1))),
-        Math.max(1, Math.round(output.size[1] / 2 ** (index + 1)))
+        Math.max(1, Math.round(output.size[1] / 2 ** (index + 1))),
       ];
       const levels = Array.from({ length: BLOOM_LEVELS }, (_, index) => ({
-        main: target(instance, { size: levelSize(index), format: 'rgba16float' }),
-        spare: target(instance, { size: levelSize(index), format: 'rgba16float' })
+        main: target(instance, {
+          size: levelSize(index),
+          format: "rgba16float",
+        }),
+        spare: target(instance, {
+          size: levelSize(index),
+          format: "rgba16float",
+        }),
       }));
       const frameParams = uniforms(instance, {
         view: [1, 1, 1, 0],
@@ -1088,12 +1135,12 @@ export default function AeroShards({
         shard: [0.54, 0.42, 0.74, 0.5],
         accent: [0.66, 0.33, 0.97, 0],
         marker: [0, 1, 4, CAMERA],
-        surface: [7, 0, 0, 2.4]
+        surface: [7, 0, 0, 2.4],
       });
       const channel = new MessageChannel();
       cleanups.push(() => channel.port1.close());
       const breathe = () =>
-        new Promise(resolve => {
+        new Promise((resolve) => {
           channel.port1.onmessage = resolve;
           channel.port2.postMessage(0);
         });
@@ -1104,20 +1151,37 @@ export default function AeroShards({
         pending.push(ready);
         return item;
       };
-      const groupSize = scale => [
+      const groupSize = (scale) => [
         Math.max(1, Math.round(output.size[0] * scale)),
-        Math.max(1, Math.round(output.size[1] * scale))
+        Math.max(1, Math.round(output.size[1] * scale)),
       ];
       const groups = LAYER_SCALES.map((scale, index) => ({
         scale,
-        layer: target(instance, { size: groupSize(scale), format: 'rgba16float', depth: 'depth32float' }),
-        shaded: target(instance, { size: groupSize(scale), format: 'rgba16float' }),
-        temp: target(instance, { size: index === 0 ? [1, 1] : groupSize(scale), format: 'rgba16float' }),
-        blurred: target(instance, { size: index === 0 ? [1, 1] : groupSize(scale), format: 'rgba16float' }),
-        softReady: index !== 0
+        layer: target(instance, {
+          size: groupSize(scale),
+          format: "rgba16float",
+          depth: "depth32float",
+        }),
+        shaded: target(instance, {
+          size: groupSize(scale),
+          format: "rgba16float",
+        }),
+        temp: target(instance, {
+          size: index === 0 ? [1, 1] : groupSize(scale),
+          format: "rgba16float",
+        }),
+        blurred: target(instance, {
+          size: index === 0 ? [1, 1] : groupSize(scale),
+          format: "rgba16float",
+        }),
+        softReady: index !== 0,
       }));
-      const params = groups.map(() => uniforms(instance, { view: [1, 1, 1, 0], look: [0.7, 0, 0, 0] }));
-      const shades = groups.map(() => uniforms(instance, { info: [0, 0, 0, 0], more: [0, 0, 0, 0] }));
+      const params = groups.map(() =>
+        uniforms(instance, { view: [1, 1, 1, 0], look: [0.7, 0, 0, 0] }),
+      );
+      const shades = groups.map(() =>
+        uniforms(instance, { info: [0, 0, 0, 0], more: [0, 0, 0, 0] }),
+      );
       const solids = [];
       const edges = [];
       const shadows = [];
@@ -1127,14 +1191,14 @@ export default function AeroShards({
           prepare(
             draw(instance, {
               shader: SHARD_SHADER,
-              entry: { fragment: 'fs_solid' },
+              entry: { fragment: "fs_solid" },
               vertices: 6,
-              cull: 'none',
-              depth: { write: true, compare: 'less' },
-              label: `aero-shards-solid-${index}`
+              cull: "none",
+              depth: { write: true, compare: "less" },
+              label: `aero-shards-solid-${index}`,
             }),
-            group.layer
-          )
+            group.layer,
+          ),
         );
         await breathe();
         if (disposed) return;
@@ -1142,15 +1206,15 @@ export default function AeroShards({
           prepare(
             draw(instance, {
               shader: SHARD_SHADER,
-              entry: { fragment: 'fs_edge' },
+              entry: { fragment: "fs_edge" },
               vertices: 6,
-              cull: 'none',
-              depth: { write: false, compare: 'less' },
-              blend: 'premultiplied',
-              label: `aero-shards-edge-${index}`
+              cull: "none",
+              depth: { write: false, compare: "less" },
+              blend: "premultiplied",
+              label: `aero-shards-edge-${index}`,
             }),
-            group.layer
-          )
+            group.layer,
+          ),
         );
         await breathe();
         if (disposed) return;
@@ -1159,10 +1223,14 @@ export default function AeroShards({
             draw(instance, {
               shader: SHADOW_SHADER,
               label: `aero-shards-shadow-${index}`,
-              set: { source: group.layer, depthMap: group.layer.depth, shadeInfo: shades[index] }
+              set: {
+                source: group.layer,
+                depthMap: group.layer.depth,
+                shadeInfo: shades[index],
+              },
             }),
-            group.shaded
-          )
+            group.shaded,
+          ),
         );
       }
       let markerCapacity = 0;
@@ -1172,18 +1240,18 @@ export default function AeroShards({
         draw(instance, {
           shader: MARKER_SHADER,
           vertices: 6,
-          cull: 'none',
+          cull: "none",
           depth: false,
-          blend: 'premultiplied',
-          label: 'aero-shards-markers'
+          blend: "premultiplied",
+          label: "aero-shards-markers",
         }),
-        scene
+        scene,
       );
-      const ensureMarkers = needed => {
+      const ensureMarkers = (needed) => {
         if (needed <= markerCapacity && markerBuffer) return;
         markerCapacity = Math.max(needed, 512);
         markerData = new Float32Array(markerCapacity * MARKER_FLOATS);
-        markerBuffer = storage(instance, markerData.byteLength, 'read');
+        markerBuffer = storage(instance, markerData.byteLength, "read");
         markerDraw.set({ scene: frameParams, markers: markerBuffer });
       };
       ensureMarkers(512);
@@ -1192,16 +1260,24 @@ export default function AeroShards({
       let upload = new Float32Array(0);
       let staging = new Float32Array(0);
       let depths = new Float32Array(0);
-      const ensureCapacity = needed => {
+      const ensureCapacity = (needed) => {
         if (needed <= capacity && shardBuffer) return;
         capacity = Math.max(needed, 256);
         upload = new Float32Array(capacity * FLOATS);
         staging = new Float32Array(capacity * FLOATS);
         depths = new Float32Array(capacity);
-        shardBuffer = storage(instance, upload.byteLength, 'read');
+        shardBuffer = storage(instance, upload.byteLength, "read");
         groups.forEach((_, index) => {
-          solids[index].set({ scene: frameParams, shards: shardBuffer, layerInfo: params[index] });
-          edges[index].set({ scene: frameParams, shards: shardBuffer, layerInfo: params[index] });
+          solids[index].set({
+            scene: frameParams,
+            shards: shardBuffer,
+            layerInfo: params[index],
+          });
+          edges[index].set({
+            scene: frameParams,
+            shards: shardBuffer,
+            layerInfo: params[index],
+          });
         });
       };
       ensureCapacity(settingsRef.current.count);
@@ -1221,33 +1297,45 @@ export default function AeroShards({
             draw(instance, {
               shader: index === 0 ? PREFILTER_SHADER : DOWNSAMPLE_SHADER,
               label: `aero-shards-down-${index}`,
-              set: { source, linearSampler: linear, bloom: downParams }
+              set: { source, linearSampler: linear, bloom: downParams },
             }),
-            level.main
+            level.main,
           ),
           horizontal: prepare(
             draw(instance, {
               shader: BLUR_SHADER,
               label: `aero-shards-blur-x-${index}`,
-              set: { source: level.main, linearSampler: linear, bloom: horizontalParams }
+              set: {
+                source: level.main,
+                linearSampler: linear,
+                bloom: horizontalParams,
+              },
             }),
-            level.spare
+            level.spare,
           ),
           vertical: prepare(
             draw(instance, {
               shader: BLUR_SHADER,
               label: `aero-shards-blur-y-${index}`,
-              set: { source: level.spare, linearSampler: linear, bloom: verticalParams }
+              set: {
+                source: level.spare,
+                linearSampler: linear,
+                bloom: verticalParams,
+              },
             }),
-            level.main
-          )
+            level.main,
+          ),
         };
       });
-      const finishParams = uniforms(instance, { info: [0, 0, 0, 1], paper: [0, 0, 0, 0], mode: [0, 0, 0, 0] });
+      const finishParams = uniforms(instance, {
+        info: [0, 0, 0, 1],
+        paper: [0, 0, 0, 0],
+        mode: [0, 0, 0, 0],
+      });
       const finish = prepare(
         draw(instance, {
           shader: FINISH_SHADER,
-          label: 'aero-shards-finish',
+          label: "aero-shards-finish",
           set: {
             sceneTexture: scene,
             linearSampler: linear,
@@ -1255,16 +1343,22 @@ export default function AeroShards({
             bloom1: levels[1].main,
             bloom2: levels[2].main,
             bloom3: levels[3].main,
-            finish: finishParams
-          }
+            finish: finishParams,
+          },
         }),
-        { colors: [format] }
+        { colors: [format] },
       );
       await breathe();
       if (disposed) return;
-      const spreadX = DEPTHS.map(() => uniforms(instance, { texel: [0, 0, 0, 0] }));
-      const spreadY = DEPTHS.map(() => uniforms(instance, { texel: [0, 0, 0, 0] }));
-      const mixParams = DEPTHS.map(() => uniforms(instance, { info: [1, 0, 0, 0] }));
+      const spreadX = DEPTHS.map(() =>
+        uniforms(instance, { texel: [0, 0, 0, 0] }),
+      );
+      const spreadY = DEPTHS.map(() =>
+        uniforms(instance, { texel: [0, 0, 0, 0] }),
+      );
+      const mixParams = DEPTHS.map(() =>
+        uniforms(instance, { info: [1, 0, 0, 0] }),
+      );
       const layerPasses = [];
       for (let level = 0; level < LEVELS; level += 1) {
         layerPasses.push(
@@ -1273,37 +1367,53 @@ export default function AeroShards({
               draw(instance, {
                 shader: LAYER_BLUR_SHADER,
                 label: `aero-shards-depth-x-${level}-${index}`,
-                set: { source: group.shaded, linearSampler: linear, spreadInfo: spreadX[level] }
+                set: {
+                  source: group.shaded,
+                  linearSampler: linear,
+                  spreadInfo: spreadX[level],
+                },
               }),
-              group.temp
+              group.temp,
             ),
             blurY: prepare(
               draw(instance, {
                 shader: LAYER_BLUR_SHADER,
                 label: `aero-shards-depth-y-${level}-${index}`,
-                set: { source: group.temp, linearSampler: linear, spreadInfo: spreadY[level] }
+                set: {
+                  source: group.temp,
+                  linearSampler: linear,
+                  spreadInfo: spreadY[level],
+                },
               }),
-              group.blurred
+              group.blurred,
             ),
             sharp: prepare(
               draw(instance, {
                 shader: COMPOSITE_SHADER,
                 label: `aero-shards-sharp-${level}-${index}`,
-                blend: 'premultiplied',
-                set: { source: group.shaded, linearSampler: linear, mixInfo: mixParams[level] }
+                blend: "premultiplied",
+                set: {
+                  source: group.shaded,
+                  linearSampler: linear,
+                  mixInfo: mixParams[level],
+                },
               }),
-              scene
+              scene,
             ),
             soft: prepare(
               draw(instance, {
                 shader: COMPOSITE_SHADER,
                 label: `aero-shards-soft-${level}-${index}`,
-                blend: 'premultiplied',
-                set: { source: group.blurred, linearSampler: linear, mixInfo: mixParams[level] }
+                blend: "premultiplied",
+                set: {
+                  source: group.blurred,
+                  linearSampler: linear,
+                  mixInfo: mixParams[level],
+                },
               }),
-              scene
-            )
-          }))
+              scene,
+            ),
+          })),
         );
         await breathe();
         if (disposed) return;
@@ -1317,14 +1427,14 @@ export default function AeroShards({
         tangent: new Float32Array(SAMPLES * 3),
         across: new Float32Array(SAMPLES * 3),
         lift: new Float32Array(SAMPLES * 3),
-        length: 1
+        length: 1,
       }));
       const markerCounts = [0, 0, 0, 0, 0];
       const markerStarts = [0, 0, 0, 0, 0];
       const raw = new Float32Array((SAMPLES + 1) * 3);
       const lengths = new Float32Array(SAMPLES + 1);
       const point = [0, 0, 0];
-      let pathKey = '';
+      let pathKey = "";
 
       const state = {
         visible: false,
@@ -1335,7 +1445,9 @@ export default function AeroShards({
         twist: 0,
         drift: 0,
         introAt: -1,
-        weights: PLACEMENTS.map((_, index) => (index === settingsRef.current.placement ? 1 : 0)),
+        weights: PLACEMENTS.map((_, index) =>
+          index === settingsRef.current.placement ? 1 : 0,
+        ),
         weightVelocity: [0, 0, 0, 0],
         shards: createShards(settingsRef.current.count, 1337),
         order: [],
@@ -1354,16 +1466,16 @@ export default function AeroShards({
         gatherCenter: [0, 0, 0],
         rings: [],
         markerDrift: 0,
-        markerTarget: '',
+        markerTarget: "",
         markerTotal: 0,
         targets: new Map(),
         quiet: 0,
-        seen: null
+        seen: null,
       };
 
-      const buildPaths = aspect => {
+      const buildPaths = (aspect) => {
         const closed = state.weights[3] > 0.999;
-        const key = `${aspect.toFixed(4)}|${state.weights.map(w => w.toFixed(4)).join(',')}`;
+        const key = `${aspect.toFixed(4)}|${state.weights.map((w) => w.toFixed(4)).join(",")}`;
         if (key === pathKey) return closed;
         pathKey = key;
         for (let level = 0; level < LEVELS; level += 1) {
@@ -1385,18 +1497,26 @@ export default function AeroShards({
             raw[i * 3] = x;
             raw[i * 3 + 1] = y;
             raw[i * 3 + 2] = z;
-            if (i > 0) total += Math.hypot(x - raw[i * 3 - 3], y - raw[i * 3 - 2], z - raw[i * 3 - 1]);
+            if (i > 0)
+              total += Math.hypot(
+                x - raw[i * 3 - 3],
+                y - raw[i * 3 - 2],
+                z - raw[i * 3 - 1],
+              );
             lengths[i] = total;
           }
           path.length = Math.max(total, 1e-3);
           let cursor = 0;
           for (let i = 0; i < SAMPLES; i += 1) {
             const want = (i / (SAMPLES - 1)) * total;
-            while (cursor < SAMPLES - 1 && lengths[cursor + 1] < want) cursor += 1;
+            while (cursor < SAMPLES - 1 && lengths[cursor + 1] < want)
+              cursor += 1;
             const span = Math.max(lengths[cursor + 1] - lengths[cursor], 1e-6);
             const f = clamp((want - lengths[cursor]) / span, 0, 1);
             for (let c = 0; c < 3; c += 1) {
-              path.position[i * 3 + c] = raw[cursor * 3 + c] + (raw[cursor * 3 + 3 + c] - raw[cursor * 3 + c]) * f;
+              path.position[i * 3 + c] =
+                raw[cursor * 3 + c] +
+                (raw[cursor * 3 + 3 + c] - raw[cursor * 3 + c]) * f;
             }
           }
           let px = 0;
@@ -1444,7 +1564,7 @@ export default function AeroShards({
         if (next[0] === output.size[0] && next[1] === output.size[1]) return;
         output.resize(next);
         scene.resize(next);
-        groups.forEach(group => {
+        groups.forEach((group) => {
           group.layer.resize(groupSize(group.scale));
           group.shaded.resize(groupSize(group.scale));
           if (group.softReady) {
@@ -1456,16 +1576,24 @@ export default function AeroShards({
           level.main.resize(levelSize(index));
           level.spare.resize(levelSize(index));
         });
-        groups.forEach((group, index) => shadows[index].set({ depthMap: group.layer.depth }));
+        groups.forEach((group, index) =>
+          shadows[index].set({ depthMap: group.layer.depth }),
+        );
         state.quiet = 0;
       };
       const sizes = new ResizeObserver(resize);
       sizes.observe(container);
       cleanups.push(() => sizes.disconnect());
 
-      const cam = { eye: [0, 0, CAMERA], forward: [0, 0, -1], right: [1, 0, 0], up: [0, 1, 0], focal: 1 };
+      const cam = {
+        eye: [0, 0, CAMERA],
+        forward: [0, 0, -1],
+        right: [1, 0, 0],
+        up: [0, 1, 0],
+        focal: 1,
+      };
 
-      const updateCamera = s => {
+      const updateCamera = (s) => {
         const cy = Math.cos(state.yaw);
         const sy = Math.sin(state.yaw);
         const cp = Math.cos(state.pitch);
@@ -1480,9 +1608,12 @@ export default function AeroShards({
         cam.right[0] = -cam.forward[2] / rl;
         cam.right[1] = 0;
         cam.right[2] = cam.forward[0] / rl;
-        cam.up[0] = cam.right[1] * cam.forward[2] - cam.right[2] * cam.forward[1];
-        cam.up[1] = cam.right[2] * cam.forward[0] - cam.right[0] * cam.forward[2];
-        cam.up[2] = cam.right[0] * cam.forward[1] - cam.right[1] * cam.forward[0];
+        cam.up[0] =
+          cam.right[1] * cam.forward[2] - cam.right[2] * cam.forward[1];
+        cam.up[1] =
+          cam.right[2] * cam.forward[0] - cam.right[0] * cam.forward[2];
+        cam.up[2] =
+          cam.right[0] * cam.forward[1] - cam.right[1] * cam.forward[0];
         cam.focal = output.size[1] * 0.5 * CAMERA * s.scale;
       };
 
@@ -1505,7 +1636,8 @@ export default function AeroShards({
         const closed = buildPaths(aspect);
         const introOn = s.intro && !reduced;
         const introAge = state.introAt < 0 ? 0 : state.clock - state.introAt;
-        const hover = s.mouseInteraction && !reduced ? state.presence * s.mouseStrength : 0;
+        const hover =
+          s.mouseInteraction && !reduced ? state.presence * s.mouseStrength : 0;
         let rx = 0;
         let ry = 0;
         let rz = 0;
@@ -1518,22 +1650,33 @@ export default function AeroShards({
         const steps = Math.max(1, Math.ceil(dt / (1 / 120)));
         const h = dt / Math.max(steps, 1);
         const halfHeight = output.size[1] * 0.5;
-        const rings = state.rings.map(ring => {
+        const rings = state.rings.map((ring) => {
           const life = ring.age / RING_SECONDS;
           return {
             x: ring.x,
             y: ring.y,
             age: ring.age,
-            strength: (1 - Math.exp(-ring.age / 0.06)) * (1 - life) * (1 - life)
+            strength:
+              (1 - Math.exp(-ring.age / 0.06)) * (1 - life) * (1 - life),
           };
         });
         const screenOf = (x, y, z, out) => {
           const ex = x - cam.eye[0];
           const ey = y - cam.eye[1];
           const ez = z - cam.eye[2];
-          const depth = Math.max(ex * cam.forward[0] + ey * cam.forward[1] + ez * cam.forward[2], 0.05);
-          out[0] = ((ex * cam.right[0] + ey * cam.right[1] + ez * cam.right[2]) * cam.focal) / depth / halfHeight;
-          out[1] = ((ex * cam.up[0] + ey * cam.up[1] + ez * cam.up[2]) * cam.focal) / depth / halfHeight;
+          const depth = Math.max(
+            ex * cam.forward[0] + ey * cam.forward[1] + ez * cam.forward[2],
+            0.05,
+          );
+          out[0] =
+            ((ex * cam.right[0] + ey * cam.right[1] + ez * cam.right[2]) *
+              cam.focal) /
+            depth /
+            halfHeight;
+          out[1] =
+            ((ex * cam.up[0] + ey * cam.up[1] + ez * cam.up[2]) * cam.focal) /
+            depth /
+            halfHeight;
           return depth;
         };
         const ringBand = (sx, sy, level) => {
@@ -1541,7 +1684,9 @@ export default function AeroShards({
           for (const ring of rings) {
             const radius = Math.max(0, ring.age - level * 0.07) * 2.3;
             const distance = Math.hypot(sx - ring.x, sy - ring.y);
-            total += Math.exp(-((distance - radius) * (distance - radius)) / 0.012) * ring.strength;
+            total +=
+              Math.exp(-((distance - radius) * (distance - radius)) / 0.012) *
+              ring.strength;
           }
           return total;
         };
@@ -1557,7 +1702,10 @@ export default function AeroShards({
           let introBank = 0;
           if (introOn) {
             const begin =
-              level * 0.22 + Math.max(0, s0 - 0.1) * (INTRO_SECONDS - 1.0 - (LEVELS - 1) * 0.22) + shard.arrive * 0.15;
+              level * 0.22 +
+              Math.max(0, s0 - 0.1) *
+                (INTRO_SECONDS - 1.0 - (LEVELS - 1) * 0.22) +
+              shard.arrive * 0.15;
             const local = clamp((introAge - begin) / 0.9, 0, 1);
             appear = smoother(local);
             const glide = (1 - local) * (1 - local);
@@ -1569,7 +1717,8 @@ export default function AeroShards({
           const i0 = Math.floor(f);
           const i1 = Math.min(i0 + 1, SAMPLES - 1);
           const t = f - i0;
-          const at = (array, c) => array[i0 * 3 + c] + (array[i1 * 3 + c] - array[i0 * 3 + c]) * t;
+          const at = (array, c) =>
+            array[i0 * 3 + c] + (array[i1 * 3 + c] - array[i0 * 3 + c]) * t;
           const cx = at(path.position, 0);
           const cy = at(path.position, 1);
           const cz = at(path.position, 2);
@@ -1593,17 +1742,25 @@ export default function AeroShards({
           const bz = lz0 * ca - az0 * sa;
           const depthScale = DEPTHS[level] / CAMERA;
           const width =
-            s.spread * (0.15 + 0.035 * DEPTHS[level]) * (0.8 + 0.3 * Math.sin(s0 * TAU * 1.3 + level * 0.8));
+            s.spread *
+            (0.15 + 0.035 * DEPTHS[level]) *
+            (0.8 + 0.3 * Math.sin(s0 * TAU * 1.3 + level * 0.8));
           const lane = shard.lane * width;
           const layer = shard.layer * 0.012 * depthScale;
-          const taper = closed ? 1 : smoother(s0 / 0.12) * smoother((1 - s0) / 0.12);
+          const taper = closed
+            ? 1
+            : smoother(s0 / 0.12) * smoother((1 - s0) / 0.12);
           const billow =
             s.billow *
             0.16 *
             depthScale *
             Math.sin(s0 * TAU * 1.3 - state.drift * 0.5 + level * 1.1) *
             (0.4 + 0.6 * taper);
-          const sway = s.billow * 0.06 * depthScale * Math.sin(s0 * TAU * 0.8 - state.drift * 0.35 + level * 2.4);
+          const sway =
+            s.billow *
+            0.06 *
+            depthScale *
+            Math.sin(s0 * TAU * 0.8 - state.drift * 0.35 + level * 2.4);
           const wobble = 0.009 * depthScale;
           const drift = state.drift;
           const hx =
@@ -1655,18 +1812,24 @@ export default function AeroShards({
               fx += (nx - tx * sideways) * strength;
               fy += (ny - ty * sideways) * strength;
               fz += (nz - tz * sideways) * strength;
-              tiltTarget += hover * falloff * 1.1 * (nx * ax0 + ny * ay0 + nz * az0);
+              tiltTarget +=
+                hover * falloff * 1.1 * (nx * ax0 + ny * ay0 + nz * az0);
             }
           }
 
           if (state.hold > 0.001 && shard.joined) {
             const slot = shard.slot;
-            const orbit = slot[0] + state.clock * (0.8 / (0.12 + slot[1])) * slot[3];
+            const orbit =
+              slot[0] + state.clock * (0.8 / (0.12 + slot[1])) * slot[3];
             const radius = slot[1] / s.scale;
             const gx = state.gatherCenter[0] + Math.cos(orbit) * radius;
             const gy = state.gatherCenter[1] + Math.sin(orbit) * radius * 0.75;
-            const gz = state.gatherCenter[2] + Math.sin(orbit) * radius * 0.45 + slot[2] * 0.3;
-            shard.gather += (state.hold - shard.gather) * (1 - Math.exp(-dt / 0.3));
+            const gz =
+              state.gatherCenter[2] +
+              Math.sin(orbit) * radius * 0.45 +
+              slot[2] * 0.3;
+            shard.gather +=
+              (state.hold - shard.gather) * (1 - Math.exp(-dt / 0.3));
             const pull = shard.gather * 30;
             fx += (gx - px) * pull;
             fy += (gy - py) * pull;
@@ -1683,7 +1846,9 @@ export default function AeroShards({
               const dxr = flat[0] - ring.x;
               const dyr = flat[1] - ring.y;
               const distance = Math.hypot(dxr, dyr);
-              const band = Math.exp(-((distance - radius) * (distance - radius)) / 0.012) * ring.strength;
+              const band =
+                Math.exp(-((distance - radius) * (distance - radius)) / 0.012) *
+                ring.strength;
               if (band > 0.01) {
                 shard.flash = Math.max(shard.flash, band * 0.75);
                 const outward = Math.max(distance, 0.05);
@@ -1691,7 +1856,8 @@ export default function AeroShards({
                 const uy = (cam.right[1] * dxr + cam.up[1] * dyr) / outward;
                 const uz = (cam.right[2] * dxr + cam.up[2] * dyr) / outward;
                 tiltTarget += band * 1.4 * (ux * ax0 + uy * ay0 + uz * az0);
-                const push = (band * 2.2 * depthScale) / Math.max(distance, 0.05);
+                const push =
+                  (band * 2.2 * depthScale) / Math.max(distance, 0.05);
                 fx += (cam.right[0] * dxr + cam.up[0] * dyr) * push;
                 fy += (cam.right[1] * dxr + cam.up[1] * dyr) * push;
                 fz += (cam.right[2] * dxr + cam.up[2] * dyr) * push;
@@ -1701,13 +1867,17 @@ export default function AeroShards({
 
           const stiffness = 24 * (1 - shard.gather * 0.95);
           for (let step = 0; step < steps; step += 1) {
-            shard.velocity[0] += (fx - stiffness * shard.offset[0] - 7.5 * shard.velocity[0]) * h;
-            shard.velocity[1] += (fy - stiffness * shard.offset[1] - 7.5 * shard.velocity[1]) * h;
-            shard.velocity[2] += (fz - stiffness * shard.offset[2] - 7.5 * shard.velocity[2]) * h;
+            shard.velocity[0] +=
+              (fx - stiffness * shard.offset[0] - 7.5 * shard.velocity[0]) * h;
+            shard.velocity[1] +=
+              (fy - stiffness * shard.offset[1] - 7.5 * shard.velocity[1]) * h;
+            shard.velocity[2] +=
+              (fz - stiffness * shard.offset[2] - 7.5 * shard.velocity[2]) * h;
             shard.offset[0] += shard.velocity[0] * h;
             shard.offset[1] += shard.velocity[1] * h;
             shard.offset[2] += shard.velocity[2] * h;
-            shard.tiltVelocity += (90 * (tiltTarget - shard.tilt) - 15 * shard.tiltVelocity) * h;
+            shard.tiltVelocity +=
+              (90 * (tiltTarget - shard.tilt) - 15 * shard.tiltVelocity) * h;
             shard.tilt += shard.tiltVelocity * h;
           }
           shard.flash *= Math.exp(-dt / 0.45);
@@ -1746,7 +1916,10 @@ export default function AeroShards({
           const wx = vy * dz - vz * dy;
           const wy = vz * dx - vx * dz;
           const wz = vx * dy - vy * dx;
-          const yaw = shard.yaw + 0.05 * Math.sin(state.clock * shard.flutter[1] * 0.7 + shard.flutter[0]);
+          const yaw =
+            shard.yaw +
+            0.05 *
+              Math.sin(state.clock * shard.flutter[1] * 0.7 + shard.flutter[0]);
           const cyaw = Math.cos(yaw);
           const syaw = Math.sin(yaw);
           const kx = dx * cyaw + wx * syaw;
@@ -1757,15 +1930,28 @@ export default function AeroShards({
           const jz = wz * cyaw - dz * syaw;
           const wave =
             0.8 * twistWeight * Math.sin(angle) +
-            0.3 * Math.sin(s0 * TAU * 1.6 - state.roll * 0.55 + level * 0.9 + shard.lane * 0.7);
-          const flutter = 0.06 * Math.sin(state.clock * shard.flutter[1] + shard.flutter[0]);
-          const bank = MAX_BANK * Math.tanh((wave + shard.bank + flutter + shard.tilt + introBank) / MAX_BANK);
+            0.3 *
+              Math.sin(
+                s0 * TAU * 1.6 -
+                  state.roll * 0.55 +
+                  level * 0.9 +
+                  shard.lane * 0.7,
+              );
+          const flutter =
+            0.06 * Math.sin(state.clock * shard.flutter[1] + shard.flutter[0]);
+          const bank =
+            MAX_BANK *
+            Math.tanh(
+              (wave + shard.bank + flutter + shard.tilt + introBank) / MAX_BANK,
+            );
           const cb = Math.cos(bank);
           const sb = Math.sin(bank);
           const mx = vx * cb + jx * sb;
           const my = vy * cb + jy * sb;
           const mz = vz * cb + jz * sb;
-          const pitch = shard.pitch + 0.2 * Math.sin(s0 * TAU * 1.1 - state.roll * 0.4 + level * 2.1);
+          const pitch =
+            shard.pitch +
+            0.2 * Math.sin(s0 * TAU * 1.1 - state.roll * 0.4 + level * 2.1);
           const cp = Math.cos(pitch);
           const sp = Math.sin(pitch);
           const axisX = kx * cp + mx * sp;
@@ -1778,10 +1964,18 @@ export default function AeroShards({
           const ex = ox - cam.eye[0];
           const ey = oy - cam.eye[1];
           const ez = oz - cam.eye[2];
-          const viewDepth = ex * cam.forward[0] + ey * cam.forward[1] + ez * cam.forward[2];
+          const viewDepth =
+            ex * cam.forward[0] + ey * cam.forward[1] + ez * cam.forward[2];
           depths[index] = viewDepth;
           const core = 1 - 0.45 * shard.lane * shard.lane;
-          const size = 0.062 * s.shardSize * shard.size * GROWTH[level] * appear * Math.sqrt(taper) * core;
+          const size =
+            0.062 *
+            s.shardSize *
+            shard.size *
+            GROWTH[level] *
+            appear *
+            Math.sqrt(taper) *
+            core;
           const o = index * FLOATS;
           staging[o] = ox;
           staging[o + 1] = oy;
@@ -1813,14 +2007,15 @@ export default function AeroShards({
           const previousTargets = state.targets;
           const nextTargets = new Map();
           const targetEase = 1 - Math.exp(-dt / 0.12);
-          let nearestKey = '';
+          let nearestKey = "";
           let nearestGap = 72;
           for (let level = LEVELS - 1; level >= 0; level -= 1) {
             markerStarts[level] = markerTotal;
             const depth = DEPTHS[level];
             const depthScale = depth / CAMERA;
             const spacing = 0.42 * Math.pow(depthScale, 0.55);
-            const halfW = ((aspect * depth) / (CAMERA * s.scale)) * 1.12 + spacing;
+            const halfW =
+              ((aspect * depth) / (CAMERA * s.scale)) * 1.12 + spacing;
             const halfH = (depth / (CAMERA * s.scale)) * 1.12 + spacing;
             const drift = state.markerDrift;
             const phase = MARKER_PHASES[level];
@@ -1838,7 +2033,11 @@ export default function AeroShards({
                 const y = (j + phase[1]) * spacing;
                 const z = CAMERA - depth;
                 const markerDepth = screenOf(x, y, z, flat);
-                if (Math.abs(flat[0]) > aspect * 1.05 || Math.abs(flat[1]) > 1.05) continue;
+                if (
+                  Math.abs(flat[0]) > aspect * 1.05 ||
+                  Math.abs(flat[1]) > 1.05
+                )
+                  continue;
                 let best = Infinity;
                 for (let k = 0; k < SAMPLES; k += 2) {
                   const dx = x - position[k * 3];
@@ -1851,37 +2050,62 @@ export default function AeroShards({
                 const blinkSeed = latticeHash(level, i, j, 23);
                 const blinkRate = latticeHash(level, i, j, 37);
                 const blink =
-                  blinkSeed < 0.07 ? 0.5 + 0.5 * Math.sin(state.clock * (1.4 + blinkRate * 2.2) + blinkRate * 40) : 0;
-                const pointerGap = (Math.hypot(flat[0] - pointerX, flat[1] - pointerY) * halfHeight) / ratio;
+                  blinkSeed < 0.07
+                    ? 0.5 +
+                      0.5 *
+                        Math.sin(
+                          state.clock * (1.4 + blinkRate * 2.2) +
+                            blinkRate * 40,
+                        )
+                    : 0;
+                const pointerGap =
+                  (Math.hypot(flat[0] - pointerX, flat[1] - pointerY) *
+                    halfHeight) /
+                  ratio;
                 const key = `${level}:${i}:${j}`;
                 if (level <= 2 && engaged > 0.01 && pointerGap < nearestGap) {
                   nearestGap = pointerGap;
                   nearestKey = key;
                 }
-                const wanted = key === state.markerTarget ? engaged * (1 - smoother((pointerGap - 30) / 42)) : 0;
+                const wanted =
+                  key === state.markerTarget
+                    ? engaged * (1 - smoother((pointerGap - 30) / 42))
+                    : 0;
                 const before = previousTargets.get(key) ?? 0;
                 const target = before + (wanted - before) * targetEase;
                 if (target > 0.002) nextTargets.set(key, target);
-                const bracket = Math.max(smoother((blink - 0.55) / 0.4), target);
+                const bracket = Math.max(
+                  smoother((blink - 0.55) / 0.4),
+                  target,
+                );
                 let ring = 0;
                 if (rings.length) ring = ringBand(flat[0], flat[1], level);
                 let reveal = 1;
                 if (introOn) {
                   const across = clamp((flat[0] / aspect + 1) * 0.5, 0, 1);
-                  const begin = level * 0.22 + 0.35 + across * (INTRO_SECONDS - 1.3 - (LEVELS - 1) * 0.22);
+                  const begin =
+                    level * 0.22 +
+                    0.35 +
+                    across * (INTRO_SECONDS - 1.3 - (LEVELS - 1) * 0.22);
                   reveal = smoother((introAge - begin) / 0.5);
                 }
-                const fade = FADE[level] * (1 - smoother((markerDepth - 3) / 10) * 0.45) * reveal;
+                const fade =
+                  FADE[level] *
+                  (1 - smoother((markerDepth - 3) / 10) * 0.45) *
+                  reveal;
                 if (fade < 0.002) continue;
-                if (markerTotal >= markerCapacity) ensureMarkers(markerCapacity * 2);
+                if (markerTotal >= markerCapacity)
+                  ensureMarkers(markerCapacity * 2);
                 const o = markerTotal * MARKER_FLOATS;
                 markerData[o] = x;
                 markerData[o + 1] = y;
                 markerData[o + 2] = z;
                 markerData[o + 3] = fade;
-                markerData[o + 4] = 0.42 + 0.5 * near + blink * 0.9 + target * 1.3 + ring * 2.5;
+                markerData[o + 4] =
+                  0.42 + 0.5 * near + blink * 0.9 + target * 1.3 + ring * 2.5;
                 markerData[o + 5] = bracket;
-                markerData[o + 6] = 1 + 0.15 * near + 0.3 * blink + 0.2 * target;
+                markerData[o + 6] =
+                  1 + 0.15 * near + 0.3 * blink + 0.2 * target;
                 markerData[o + 7] = 0;
                 markerTotal += 1;
                 markerCounts[level] += 1;
@@ -1899,9 +2123,11 @@ export default function AeroShards({
         const shards = state.shards;
         ensureCapacity(shards.length);
         simulate(s, dt, reduced);
-        if (state.order.length !== shards.length) state.order = shards.map((_, index) => index);
+        if (state.order.length !== shards.length)
+          state.order = shards.map((_, index) => index);
         const order = state.order;
-        for (let i = 0; i < shards.length; i += 1) depths[i] += shards[i].level * 100;
+        for (let i = 0; i < shards.length; i += 1)
+          depths[i] += shards[i].level * 100;
         for (let i = 1; i < order.length; i += 1) {
           const value = order[i];
           const key = depths[value];
@@ -1917,10 +2143,14 @@ export default function AeroShards({
           const from = order[slot] * FLOATS;
           const to = slot * FLOATS;
           counts[shards[order[slot]].level] += 1;
-          for (let k = 0; k < FLOATS; k += 1) upload[to + k] = staging[from + k];
+          for (let k = 0; k < FLOATS; k += 1)
+            upload[to + k] = staging[from + k];
         }
         shardBuffer?.write(upload.subarray(0, shards.length * FLOATS));
-        if (state.markerTotal > 0) markerBuffer?.write(markerData.subarray(0, state.markerTotal * MARKER_FLOATS));
+        if (state.markerTotal > 0)
+          markerBuffer?.write(
+            markerData.subarray(0, state.markerTotal * MARKER_FLOATS),
+          );
         const starts = [0, 0, 0, 0, 0];
         let running = 0;
         for (let level = LEVELS - 1; level >= 0; level -= 1) {
@@ -1931,8 +2161,18 @@ export default function AeroShards({
         frameParams.set({
           view: [output.size[0], output.size[1], cam.focal, state.clock],
           eye: [cam.eye[0], cam.eye[1], cam.eye[2], FOCUS],
-          forward: [cam.forward[0], cam.forward[1], cam.forward[2], s.depthOfField * output.size[1] * 0.03],
-          right: [cam.right[0], cam.right[1], cam.right[2], output.size[1] * 0.05],
+          forward: [
+            cam.forward[0],
+            cam.forward[1],
+            cam.forward[2],
+            s.depthOfField * output.size[1] * 0.03,
+          ],
+          right: [
+            cam.right[0],
+            cam.right[1],
+            cam.right[2],
+            output.size[1] * 0.05,
+          ],
           up: [cam.up[0], cam.up[1], cam.up[2], s.lightMode ? 1 : 0],
           shard: [...s.shard, 0],
           accent: [...s.accent, 0],
@@ -1941,20 +2181,29 @@ export default function AeroShards({
             s.markers,
             output.size[1] / Math.max(container.clientHeight, 1),
             4 * (output.size[1] / Math.max(container.clientHeight, 1)),
-            FOCUS
-          ]
+            FOCUS,
+          ],
         });
-        passes.forEach(({ downParams, horizontalParams, verticalParams, source, level }) => {
-          downParams.set({ texel: [0.5 / source.size[0], 0.5 / source.size[1], 0.75, 0.5] });
-          horizontalParams.set({ texel: [1 / level.main.size[0], 0, 0, 0] });
-          verticalParams.set({ texel: [0, 1 / level.main.size[1], 0, 0] });
-        });
+        passes.forEach(
+          ({ downParams, horizontalParams, verticalParams, source, level }) => {
+            downParams.set({
+              texel: [0.5 / source.size[0], 0.5 / source.size[1], 0.75, 0.5],
+            });
+            horizontalParams.set({ texel: [1 / level.main.size[0], 0, 0, 0] });
+            verticalParams.set({ texel: [0, 1 / level.main.size[1], 0, 0] });
+          },
+        );
         const paper = s.paper ?? [0, 0, 0];
         const blooming = s.glow > 0.001 && !s.lightMode;
         finishParams.set({
-          info: [s.grain, Math.floor(state.clock * 24), blooming ? s.glow : 0, 1.3],
+          info: [
+            s.grain,
+            Math.floor(state.clock * 24),
+            blooming ? s.glow : 0,
+            1.3,
+          ],
           paper: [paper[0], paper[1], paper[2], s.paper ? 1 : 0],
-          mode: [s.lightMode ? 1 : 0, s.vignette, 0, 0]
+          mode: [s.lightMode ? 1 : 0, s.vignette, 0, 0],
         });
 
         const coc = s.depthOfField * output.size[1] * 0.012;
@@ -1972,55 +2221,101 @@ export default function AeroShards({
           const size = group.layer.size;
           params[groupIndex].set({
             view: [size[0], size[1], cam.focal * (size[0] / output.size[0]), 0],
-            look: [s.lightMode ? 0.5 : 0.7, 0, 0, 0]
+            look: [s.lightMode ? 0.5 : 0.7, 0, 0, 0],
           });
           const local = sigma * group.scale;
           spreadX[level].set({ texel: [1 / size[0], 0, local, 0] });
           spreadY[level].set({ texel: [0, 1 / size[1], local, 0] });
           mixParams[level].set({ info: [FADE[level], 0, 0, 0] });
-          const step = Math.max(0.6, 1.4 * (size[0] / Math.max(container.clientWidth, 1)));
-          const shadowStrength = s.material === MATERIALS.glass ? 0 : s.lightMode ? 0.32 : 0.62;
-          shades[groupIndex].set({ info: [step * 0.55, step * 0.85, shadowStrength, 0], more: [0.00045, 0, 0, 0] });
+          const step = Math.max(
+            0.6,
+            1.4 * (size[0] / Math.max(container.clientWidth, 1)),
+          );
+          const shadowStrength =
+            s.material === MATERIALS.glass ? 0 : s.lightMode ? 0.32 : 0.62;
+          shades[groupIndex].set({
+            info: [step * 0.55, step * 0.85, shadowStrength, 0],
+            more: [0.00045, 0, 0, 0],
+          });
           return { group, groupIndex, soft };
         });
 
-        frame(instance, current => {
+        frame(instance, (current) => {
           for (let level = LEVELS - 1; level >= 0; level -= 1) {
             const { group, groupIndex, soft } = plan[level];
             const steps = layerPasses[level][groupIndex];
             if (counts[level] > 0) {
-              current.pass({ target: group.layer, clear: [0, 0, 0, 0], clearDepth: 1 }, pass => {
-                pass.draw(solids[groupIndex], { instances: counts[level], firstInstance: starts[level] });
-                pass.draw(edges[groupIndex], { instances: counts[level], firstInstance: starts[level] });
-              });
-              current.pass({ target: group.shaded, clear: [0, 0, 0, 0] }, pass => pass.draw(shadows[groupIndex]));
+              current.pass(
+                { target: group.layer, clear: [0, 0, 0, 0], clearDepth: 1 },
+                (pass) => {
+                  pass.draw(solids[groupIndex], {
+                    instances: counts[level],
+                    firstInstance: starts[level],
+                  });
+                  pass.draw(edges[groupIndex], {
+                    instances: counts[level],
+                    firstInstance: starts[level],
+                  });
+                },
+              );
+              current.pass(
+                { target: group.shaded, clear: [0, 0, 0, 0] },
+                (pass) => pass.draw(shadows[groupIndex]),
+              );
               if (soft) {
-                current.pass({ target: group.temp, clear: [0, 0, 0, 0] }, pass => pass.draw(steps.blurX));
-                current.pass({ target: group.blurred, clear: [0, 0, 0, 0] }, pass => pass.draw(steps.blurY));
+                current.pass(
+                  { target: group.temp, clear: [0, 0, 0, 0] },
+                  (pass) => pass.draw(steps.blurX),
+                );
+                current.pass(
+                  { target: group.blurred, clear: [0, 0, 0, 0] },
+                  (pass) => pass.draw(steps.blurY),
+                );
               }
             }
-            current.pass({ target: scene, clear: level === LEVELS - 1 ? [0, 0, 0, 0] : false }, pass => {
-              if (markerCounts[level] > 0) {
-                pass.draw(markerDraw, { instances: markerCounts[level], firstInstance: markerStarts[level] });
-              }
-              if (counts[level] > 0) pass.draw(soft ? steps.soft : steps.sharp);
-            });
+            current.pass(
+              {
+                target: scene,
+                clear: level === LEVELS - 1 ? [0, 0, 0, 0] : false,
+              },
+              (pass) => {
+                if (markerCounts[level] > 0) {
+                  pass.draw(markerDraw, {
+                    instances: markerCounts[level],
+                    firstInstance: markerStarts[level],
+                  });
+                }
+                if (counts[level] > 0)
+                  pass.draw(soft ? steps.soft : steps.sharp);
+              },
+            );
           }
           passes.forEach((pass, index) => {
             const level = levels[index];
             if (!blooming) {
-              current.pass({ target: level.main, clear: [0, 0, 0, 0] }, () => {});
+              current.pass(
+                { target: level.main, clear: [0, 0, 0, 0] },
+                () => {},
+              );
               return;
             }
-            current.pass({ target: level.main, clear: [0, 0, 0, 0] }, p => p.draw(pass.down));
-            current.pass({ target: level.spare, clear: [0, 0, 0, 0] }, p => p.draw(pass.horizontal));
-            current.pass({ target: level.main, clear: [0, 0, 0, 0] }, p => p.draw(pass.vertical));
+            current.pass({ target: level.main, clear: [0, 0, 0, 0] }, (p) =>
+              p.draw(pass.down),
+            );
+            current.pass({ target: level.spare, clear: [0, 0, 0, 0] }, (p) =>
+              p.draw(pass.horizontal),
+            );
+            current.pass({ target: level.main, clear: [0, 0, 0, 0] }, (p) =>
+              p.draw(pass.vertical),
+            );
           });
-          current.pass({ target: output, clear: [0, 0, 0, 0] }, pass => pass.draw(finish));
+          current.pass({ target: output, clear: [0, 0, 0, 0] }, (pass) =>
+            pass.draw(finish),
+          );
         });
       };
 
-      const tick = now => {
+      const tick = (now) => {
         raf = requestAnimationFrame(tick);
         if (!state.visible || document.hidden) {
           state.last = now;
@@ -2039,22 +2334,29 @@ export default function AeroShards({
         const moving = !s.paused && !reduced;
         if (moving) {
           for (let level = 0; level < LEVELS; level += 1) {
-            state.travel[level] = (state.travel[level] + (dt * s.speed * 0.09) / paths[level].length) % 1;
+            state.travel[level] =
+              (state.travel[level] +
+                (dt * s.speed * 0.09) / paths[level].length) %
+              1;
           }
           state.roll += dt * s.speed * 1.0;
           state.twist += dt * s.speed * 0.08;
           state.drift += dt * s.speed;
         }
 
-        const goal = PLACEMENTS.map((_, index) => (index === s.placement ? 1 : 0));
+        const goal = PLACEMENTS.map((_, index) =>
+          index === s.placement ? 1 : 0,
+        );
         let settling = false;
         const decay = Math.exp(-4 * dt);
         for (let index = 0; index < 4; index += 1) {
           const offset = state.weights[index] - goal[index];
           const momentum = state.weightVelocity[index] + 4 * offset;
           state.weights[index] = goal[index] + (offset + momentum * dt) * decay;
-          state.weightVelocity[index] = (state.weightVelocity[index] - 4 * momentum * dt) * decay;
-          if (Math.abs(state.weights[index] - goal[index]) > 0.0005) settling = true;
+          state.weightVelocity[index] =
+            (state.weightVelocity[index] - 4 * momentum * dt) * decay;
+          if (Math.abs(state.weights[index] - goal[index]) > 0.0005)
+            settling = true;
         }
         if (!settling) {
           state.weights = goal;
@@ -2062,16 +2364,21 @@ export default function AeroShards({
         }
 
         const engaged = s.mouseInteraction && state.inside && !reduced;
-        state.presence += ((engaged ? 1 : 0) - state.presence) * (1 - Math.exp(-dt / 0.25));
+        state.presence +=
+          ((engaged ? 1 : 0) - state.presence) * (1 - Math.exp(-dt / 0.25));
         const lean = engaged ? s.parallax : 0;
         const targetYaw = (state.pointer[0] - 0.5) * lean * 0.14;
         const targetPitch = (state.pointer[1] - 0.5) * lean * 0.08;
-        state.yawVelocity += (38 * (targetYaw - state.yaw) - 11 * state.yawVelocity) * dt;
-        state.pitchVelocity += (38 * (targetPitch - state.pitch) - 11 * state.pitchVelocity) * dt;
+        state.yawVelocity +=
+          (38 * (targetYaw - state.yaw) - 11 * state.yawVelocity) * dt;
+        state.pitchVelocity +=
+          (38 * (targetPitch - state.pitch) - 11 * state.pitchVelocity) * dt;
         state.yaw += state.yawVelocity * dt;
         state.pitch += state.pitchVelocity * dt;
         const leaning =
-          Math.abs(targetYaw - state.yaw) + Math.abs(targetPitch - state.pitch) > 1e-4 ||
+          Math.abs(targetYaw - state.yaw) +
+            Math.abs(targetPitch - state.pitch) >
+            1e-4 ||
           Math.abs(state.yawVelocity) + Math.abs(state.pitchVelocity) > 1e-4;
 
         if (
@@ -2086,11 +2393,17 @@ export default function AeroShards({
             updateCamera(s);
             rayAt(state.pressPoint[0], state.pressPoint[1]);
             const travelTo =
-              FOCUS / Math.max(ray[0] * cam.forward[0] + ray[1] * cam.forward[1] + ray[2] * cam.forward[2], 0.2);
+              FOCUS /
+              Math.max(
+                ray[0] * cam.forward[0] +
+                  ray[1] * cam.forward[1] +
+                  ray[2] * cam.forward[2],
+                0.2,
+              );
             state.gatherCenter = [
               cam.eye[0] + ray[0] * travelTo,
               cam.eye[1] + ray[1] * travelTo,
-              cam.eye[2] + ray[2] * travelTo
+              cam.eye[2] + ray[2] * travelTo,
             ];
             state.reach = 0;
           }
@@ -2111,11 +2424,14 @@ export default function AeroShards({
         }
 
         for (const ring of state.rings) ring.age += dt;
-        state.rings = state.rings.filter(ring => ring.age < RING_SECONDS);
+        state.rings = state.rings.filter((ring) => ring.age < RING_SECONDS);
         if (moving) state.markerDrift += dt * s.speed * 0.045;
 
         const flashing = state.shards.some(
-          shard => shard.flash > 0.01 || Math.abs(shard.tiltVelocity) > 0.01 || Math.abs(shard.tilt) > 0.01
+          (shard) =>
+            shard.flash > 0.01 ||
+            Math.abs(shard.tiltVelocity) > 0.01 ||
+            Math.abs(shard.tilt) > 0.01,
         );
         const transient =
           settling ||
@@ -2124,7 +2440,9 @@ export default function AeroShards({
           state.presence > 0.002 ||
           state.rings.length > 0 ||
           state.hold > 0 ||
-          (s.intro && !reduced && state.clock - state.introAt < INTRO_SECONDS + 0.5);
+          (s.intro &&
+            !reduced &&
+            state.clock - state.introAt < INTRO_SECONDS + 0.5);
         if (state.seen !== s || transient || moving) state.quiet = 0;
         else state.quiet += 1;
         state.seen = s;
@@ -2133,22 +2451,22 @@ export default function AeroShards({
         render(s, dt, reduced);
       };
 
-      const local = event => {
+      const local = (event) => {
         const rect = container.getBoundingClientRect();
         return {
           point: [
             (event.clientX - rect.left) / Math.max(rect.width, 1),
-            (event.clientY - rect.top) / Math.max(rect.height, 1)
+            (event.clientY - rect.top) / Math.max(rect.height, 1),
           ],
           inside:
             event.clientX >= rect.left &&
             event.clientX <= rect.right &&
             event.clientY >= rect.top &&
-            event.clientY <= rect.bottom
+            event.clientY <= rect.bottom,
         };
       };
 
-      const onMove = event => {
+      const onMove = (event) => {
         const hit = local(event);
         state.inside = hit.inside;
         if (hit.inside) state.pointer = hit.point;
@@ -2158,12 +2476,15 @@ export default function AeroShards({
         state.inside = false;
       };
 
-      const onDown = event => {
+      const onDown = (event) => {
         const s = settingsRef.current;
-        if (event.button !== 0 || prefersReduced() || !s.mouseInteraction) return;
+        if (event.button !== 0 || prefersReduced() || !s.mouseInteraction)
+          return;
         if (
           event.target instanceof Element &&
-          event.target.closest('a, button, input, textarea, select, label, [role="button"]')
+          event.target.closest(
+            'a, button, input, textarea, select, label, [role="button"]',
+          )
         )
           return;
         const hit = local(event);
@@ -2181,7 +2502,7 @@ export default function AeroShards({
           state.rings.push({
             x: (state.pressPoint[0] * 2 - 1) * aspect,
             y: 1 - state.pressPoint[1] * 2,
-            age: 0
+            age: 0,
           });
           if (state.rings.length > MAX_RINGS) state.rings.shift();
         }
@@ -2194,21 +2515,21 @@ export default function AeroShards({
         state.holding = false;
       };
 
-      window.addEventListener('pointermove', onMove, { passive: true });
-      window.addEventListener('pointerdown', onDown);
-      window.addEventListener('pointerup', onUp);
-      window.addEventListener('pointercancel', onUp);
-      document.documentElement.addEventListener('pointerleave', onLeave);
+      window.addEventListener("pointermove", onMove, { passive: true });
+      window.addEventListener("pointerdown", onDown);
+      window.addEventListener("pointerup", onUp);
+      window.addEventListener("pointercancel", onUp);
+      document.documentElement.addEventListener("pointerleave", onLeave);
       cleanups.push(() => {
-        window.removeEventListener('pointermove', onMove);
-        window.removeEventListener('pointerdown', onDown);
-        window.removeEventListener('pointerup', onUp);
-        window.removeEventListener('pointercancel', onUp);
-        document.documentElement.removeEventListener('pointerleave', onLeave);
+        window.removeEventListener("pointermove", onMove);
+        window.removeEventListener("pointerdown", onDown);
+        window.removeEventListener("pointerup", onUp);
+        window.removeEventListener("pointercancel", onUp);
+        document.documentElement.removeEventListener("pointerleave", onLeave);
       });
 
-      const visibility = new IntersectionObserver(entries => {
-        state.visible = entries.some(entry => entry.isIntersecting);
+      const visibility = new IntersectionObserver((entries) => {
+        state.visible = entries.some((entry) => entry.isIntersecting);
       });
       visibility.observe(container);
       cleanups.push(() => visibility.disconnect());
@@ -2220,11 +2541,17 @@ export default function AeroShards({
     return () => {
       disposed = true;
       cancelAnimationFrame(raf);
-      cleanups.forEach(cleanup => cleanup());
+      cleanups.forEach((cleanup) => cleanup());
       gpu?.dispose();
       canvas.remove();
     };
   }, []);
 
-  return <div ref={containerRef} className={[ROOT, className].filter(Boolean).join('')} style={style} />;
+  return (
+    <div
+      ref={containerRef}
+      className={[ROOT, className].filter(Boolean).join("")}
+      style={style}
+    />
+  );
 }
